@@ -4,9 +4,9 @@ import UserLayout from "../layouts/UserLayout";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import DashboardPage from "../pages/DashboardPage";
-import ContentPage from "../pages/ContentPage";
+// import ContentPage from "../pages/ContentPage";
 import ProtectedRoutes from "./ProtectedRoutes";
-import WatchLaterPage from "../pages/WatchLaterPage";
+// import WatchLaterPage from "../pages/WatchLaterPage";
 const router = createBrowserRouter([
   {
     path: "*",
