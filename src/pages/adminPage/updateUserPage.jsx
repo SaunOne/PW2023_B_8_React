@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-const CreateUser = () => {
+const UpdateUser = () => {
   return (
     <div className="container px-4 py-2">
       <div className="row">
@@ -117,15 +117,23 @@ const CreateUser = () => {
             />
           </div>
         </div>
-        <button
-          type="submit"
-          className="btn btn-warning btn-block mb-4 btn-custom px-3"
-        >
-          Add User
-        </button>
+        <div className="d-flex align-item-start">
+          <button
+            type="submit"
+            className="btn btn-warning btn-block mb-4 btn-custom px-3"
+          >
+            Add User
+          </button>
+          <button
+            type="submit"
+            className="btn btn-danger btn-block mb-4 btn-custom px-3 mx-2"
+          >
+            Delete User
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default CreateUser;
+export default UpdateUser;
