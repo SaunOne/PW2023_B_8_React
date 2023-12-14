@@ -8,11 +8,13 @@ import Test from "./test";
 import ShowDataUser from "./pages/adminPage/showDataUser";
 import CreateUserPage from "./pages/adminPage/createUserPage";
 import ProfilePage from "./pages/ProfilePage";
+import PilihLayananPage from "./pages/PilihLayananPage";
+import PaymentPage from "./pages/PaymentPage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     {/* <CreateUserPage /> */}
     {/* <ShowDataUser/> */}
-    <ProfilePage/>
+    <PaymentPage/>
   </React.StrictMode>
 );
