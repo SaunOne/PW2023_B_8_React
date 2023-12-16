@@ -9,6 +9,7 @@ import {
     Stack,
     Button,
 } from "react-bootstrap";
+import { Steps } from 'rsuite';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins, faCreditCard, faWallet } from "@fortawesome/free-solid-svg-icons";
 import "./css/Payment.css";
@@ -22,16 +23,12 @@ const PaymentPage = () => {
 
     return (
         <>
-            <div class="container cont-nav mt-5">
-                <nav aria-label="breadcrumb">
-                    <ol className="breadcrumb justify-content-center">
-                        <li className="breadcrumb-item"><a href=""
-                            className="link-underline link-underline-opacity-0">Laundry Page</a></li>
-                        <li className="breadcrumb-item"><a href=""
-                            className="link-underline link-underline-opacity-0">Pilih Layanan</a></li>
-                        <li className="breadcrumb-item active" aria-current="page"><strong>Payment</strong></li>
-                    </ol>
-                </nav>
+            <div className="container steps">
+                <Steps current={2}>
+                    <Steps.Item title="Laundry Page" />
+                    <Steps.Item title="Pilih Layanan" />
+                    <Steps.Item title="Payment Page" />
+                </Steps>
             </div>
             <div className="row">
                 <div className="col-8 cont-1">
@@ -81,7 +78,7 @@ const PaymentPage = () => {
                             <Form id="walletForm" style={{ display: selectedPaymentMethod === "wallet" ? "block" : "none" }}>
                                 <label htmlFor="wallet" className="form-label"><strong>Jumlah Saldo</strong></label>
                                 <input type="text" className="form-control form-control-lg" id="wallet" name="wallet"
-                                    value="Rp1.000.000,00" readonly />
+                                    value="Rp1.000.000,00" readOnly />
                             </Form>
                             <Form id="debitForm" style={{ display: selectedPaymentMethod === "card" ? "block" : "none" }}>
                                 <div className="row">
@@ -171,7 +168,7 @@ const PaymentPage = () => {
                         <table className="table">
                             <thead>
                                 <tr className="table-info">
-                                    <th colspan="2">Detail Pesanan</th>
+                                    <th colSpan="2">Detail Pesanan</th>
                                 </tr>
                             </thead>
                             <tbody>

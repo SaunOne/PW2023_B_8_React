@@ -9,20 +9,19 @@ import {
     Stack,
     Button,
 } from "react-bootstrap";
+import { Steps } from 'rsuite';
 import "./css/PilihLayanan.css";
 
 const PilihLayananPage = () => {
 
     return (
         <>
-            <div className="container-xxl cont-nav mt-5">
-                <nav aria-label="breadcrumb">
-                    <ol className="breadcrumb justify-content-center">
-                        <li className="breadcrumb-item"><a href=""
-                            className="link-underline link-underline-opacity-0">Laundry Page</a></li>
-                        <li className="breadcrumb-item active" aria-current="page"><strong>Pilih Layanan</strong></li>
-                    </ol>
-                </nav>
+            <div className="container steps">
+                <Steps current={1}>
+                    <Steps.Item title="Laundry Page" />
+                    <Steps.Item title="Pilih Layanan" />
+                    <Steps.Item title="Payment Page" />
+                </Steps>
             </div>
             <Container className="cont cont-input mt-5">
                 <div style={{ textAlign: "center" }}>

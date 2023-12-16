@@ -2,6 +2,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.steps {
+    max-width: 45%;
+}
+
 .main {
     background-color: rgb(250, 250, 250)
 }
