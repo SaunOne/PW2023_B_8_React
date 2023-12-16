@@ -21,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     {/* <PilihLayananPage/> */}
     {/* <ProfilePage/> */}
     {/* <NavbarUser/> */}
-    <TeamPage></TeamPage>
+    <WalletPage></WalletPage>
+    {/* <TeamPage></TeamPage> */}
   </React.StrictMode>
 );
