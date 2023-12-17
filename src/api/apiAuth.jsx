@@ -18,11 +18,11 @@ export const Login = async (data) => {
     sessionStorage.setItem("token", response.data.access_token);
     //simpen data user yang login
     sessionStorage.setItem("id_user", JSON.stringify(response.data.data.id_user));
+    
     return response.data;
   } catch (error) {
     // Log the error for debugging purposes
     console.error("Error:", error);
-
     // Throw the error response data if needed
     throw error.response.data;
   }

@@ -5,11 +5,11 @@
     width: 100vw;
     z-index: 1200;
     background-color: transparent;
-    position: absolute;
+    position: fixed;
 }
 
 .modalProfile {
-    position: absolute;
+    position: fixed;
     height: 500px;
     top: 50px;
     right: 80px;
@@ -20,3 +20,13 @@
     padding: 20px;
     border-radius: 10px;
 }
+
+.menu-profile {
+    color: #007bff;
+    font-size: 14px;
+    &:hover {
+        border-radius: 10px;/* Set the color you want on hover */
+        background-color: #4f4f4f; /* Add underline on hover */
+      }
+}
+

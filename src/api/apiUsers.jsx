@@ -19,8 +19,9 @@ export const GetAllUser = async () => {
 
 export const GetUserByLogin = async () => {
   try {
+    console.log(`ini tokennya : ${sessionStorage.getItem("token")}`);
      const response = await useAxios.get(`/userLogin`,{
-      header : {
+      headers : {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       }
@@ -35,7 +36,7 @@ export const GetUserByLogin = async () => {
 export const GetUserById = async (id) => {
   try {
      const response = await useAxios.get(`/users/${id}`,{
-      header : {
+      headers : {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       }

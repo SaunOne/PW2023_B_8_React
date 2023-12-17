@@ -33,7 +33,7 @@ const FormLogin = () => {
         } else {
           navigate("/user");
         }
-        sessionStorage.setItem("user", JSON.stringify(res.user));
+        sessionStorage.setItem("user", JSON.stringify(res.data));
         toast.success(res.message);
       })
       .catch((err) => {
