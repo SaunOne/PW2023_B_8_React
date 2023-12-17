@@ -3,7 +3,7 @@ import { Button, Alert, Spinner, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import InputFloatingForm from "./InputFloatingForm";
-import { SignIn } from "../../api/apiAuth";
+import { Login } from "../../api/apiAuth";
 const FormLogin = () => {
   const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = useState(true);
@@ -22,13 +22,17 @@ const FormLogin = () => {
     }
   };
 
-  const Login = (event) => {
+  const login = (event) => {
     event.preventDefault();
     setLoading(true);
-    SignIn(data)
+    Login(data)
       .then((res) => {
-        navigate("/user");
-        sessionStorage.setItem("token", res.access_token);
+        console.log( `type pengguna :  ${res.data.type_pengguna}`);
+        if(res.data.type_pengguna === 'admin'){
+          navigate("/admin");
+        } else {
+          navigate("/user");
+        }
         sessionStorage.setItem("user", JSON.stringify(res.user));
         toast.success(res.message);
       })
@@ -40,10 +44,11 @@ const FormLogin = () => {
   };
 
   return (
+
     <Form
       style={{ maxWidth: "800px", margin: "auto" }}
       className="p-4"
-      onSubmit={Login}
+      onSubmit={login}
     >
       <Alert variant="primary" className="mb-5 alertColor">
         <p className="mb-0 lead">

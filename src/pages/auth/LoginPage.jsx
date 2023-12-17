@@ -8,6 +8,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const tokenDariSS = sessionStorage.getItem("token");
+    console.log(`token ${tokenDariSS}`);
     setToken(tokenDariSS);
     if (tokenDariSS) {
       navigate("/user");

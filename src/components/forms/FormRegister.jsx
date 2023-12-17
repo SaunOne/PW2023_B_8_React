@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import InputFloatingForm from "./InputFloatingForm";
-import { SignUp } from "../../api/apiAuth";
+import { Register } from "../../api/apiAuth";
 const FormRegister = () => {
   const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = useState(true);
@@ -24,9 +24,9 @@ const FormRegister = () => {
       setIsDisabled(true);
     }
   };
-  const Register = (event) => {
+  const register = (event) => {
     event.preventDefault();
-    SignUp(data)
+    Register(data)
       .then((res) => {
         navigate("/");
         toast.success(res.message);
@@ -38,7 +38,7 @@ const FormRegister = () => {
   };
 
   return (
-    <Form style={{ maxWidth: "800px", margin: "auto" }} onSubmit={Register}>
+    <Form style={{ maxWidth: "800px", margin: "auto" }} onSubmit={register}>
       <Alert variant="primary" className="mb-5 alertColor">
         <strong>Info!</strong> Semua form wajib diisi.
       </Alert>
