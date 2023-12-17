@@ -13,6 +13,11 @@ import { Steps } from 'rsuite';
 import "./css/PilihLayanan.css";
 
 const PilihLayananPage = () => {
+    const [showJumlahLayanan, setShowJumlahLayanan] = useState(false);
+
+    const handleLayananCheckboxChange = (event) => {
+        setShowJumlahLayanan(event.target.checked);
+    };
 
     return (
         <>
@@ -29,30 +34,47 @@ const PilihLayananPage = () => {
                 </div>
                 <Form>
                     <div className="form-floating mt-3">
-                        <textarea required className="form-control" id="alamat" style={{ height: "100px" }}></textarea>
-                        <label htmlFor="alamat">Alamat</label>
+                        <textarea className="form-control" id="note" style={{ height: "100px" }}></textarea>
+                        <label htmlFor="note">Notes</label>
                     </div>
                     <div className="row mt-3">
-                        <div className="cont-input-layanan">
-                            <select className="form-select" id="layanan" required>
-                                <option selected disabled value="">Pilih Layanan</option>
-                                <option>Reguler</option>
-                                <option>Express</option>
+                        <div className="col-6 cont-input-layanan">
+                            <select className="form-select" id="durasi" required>
+                                <option selected disabled value="">Pilih Durasi</option>
+                                <option>Reguler (3 Hari)</option>
+                                <option>Express (2 Hari)</option>
+                                <option>Same Day</option>
+                            </select>
+                        </div>
+                        <div className="col-6">
+                            <select className="form-select" id="pengambilan" required>
+                                <option selected disabled value="">Pilih Pengambilan</option>
+                                <option>Delivery</option>
+                                <option>Pick Up</option>
                             </select>
                         </div>
                     </div>
                     <div className="row mt-3">
                         <div className="col-6">
                             <label className="d-flex mb-2" htmlFor="berat"><strong>Berat Laundry (Kg)</strong></label>
-                            <input type="text" className="form-control" id="berat" placeholder="Masukkan berat laundry" />
+                            <input type="number" className="form-control" id="berat" placeholder="Masukkan berat laundry" />
                         </div>
                         <div class="col-6">
                             <p className="d-flex"><strong>Pilih Layanan Lainnya:</strong></p>
-                            <div className="form-check">
-                                <input className="form-check-input" type="checkbox" value="" id="jaket" />
-                                <label className="form-check-label d-flex" htmlFor="jaket">
-                                    Jaket
-                                </label>
+                            <div className="row mb-2">
+                                <div className="col-3">
+                                    <div className="form-check">
+                                        <input className="form-check-input" type="checkbox" value="" id="jaket" onChange={handleLayananCheckboxChange} />
+                                        <label className="form-check-label d-flex" htmlFor="jaket">
+                                            Jaket
+                                        </label>
+                                    </div>
+                                </div>
+                                {showJumlahLayanan && (
+                                    <div className="col-9">
+                                        <input className="form-control" type="number" placeholder="Masukkan Jumlah" id="jaketJumlah" />
+                                    </div>
+                                )}
                             </div>
                             <div className="form-check">
                                 <input className="form-check-input" type="checkbox" value="" id="selimut" />

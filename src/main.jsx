@@ -17,11 +17,11 @@ import TeamPage from "./pages/TeamPage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* <PaymentPage/> */}
+    <PaymentPage/>
     {/* <PilihLayananPage/> */}
     {/* <ProfilePage/> */}
     {/* <NavbarUser/> */}
-    <WalletPage></WalletPage>
+    {/* <WalletPage></WalletPage> */}
     {/* <TeamPage></TeamPage> */}
   </React.StrictMode>
 );
