@@ -51,9 +51,9 @@ export const GetUserById = async (id) => {
 export const UpdateProfile = async (data) => {
   console.log(data);
   try {
-    const response = await useAxios.put(`/users`, data, {
+    const response = await useAxios.post(`/users/update`, data, {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data", // untuk upload thumbnail
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
     });

@@ -8,7 +8,7 @@ import {
   Stack,
   Button,
 } from "react-bootstrap";
-import { getThumbnail } from "../api";
+import { getImage } from "../api";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "./dasboard.css";
