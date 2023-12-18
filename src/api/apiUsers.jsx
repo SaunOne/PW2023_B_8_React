@@ -18,9 +18,11 @@ export const GetAllUser = async () => {
 };
 
 export const GetUserByLogin = async () => {
+  const token = sessionStorage.getItem("token");
+  console.log("token pler:",token);
   try {
      const response = await useAxios.get(`/userLogin`,{
-      header : {
+      headers : {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       }
@@ -35,7 +37,7 @@ export const GetUserByLogin = async () => {
 export const GetUserById = async (id) => {
   try {
      const response = await useAxios.get(`/users/${id}`,{
-      header : {
+      headers : {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       }
