@@ -7,22 +7,57 @@ import {
 import { Steps } from 'rsuite';
 import "../css/PilihLayanan.css";
 import { GetAllItems } from "../../api/apiItem";
+import { GetAllJenisPengambilan } from "../../api/apiJenisPengambilan";
+import { GetAllLayanan } from "../../api/apiLayanan";
 
 const Order = () => {
   const [showJumlahLayanan, setShowJumlahLayanan] = useState(false);
   const [items, setItems] = useState([]);
+  const [jenisPengambilan, setJenisPengambilan] = useState([]);
+  const [layanan, setLayanan] = useState([]);
+  const [order, setOrder] = useState({
+    id_layanan: "",
+    id_jenis_pengambilan: "",
+    berat: "",
+    total_harga: "",
+    status_pengerjaan: "",
+    status_pembayaran: "",
+    tanggal_masuk: "",
+    tanggal_keluar: "",
+    note: "",
+  });
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const itemsData = await GetAllItems();
         setItems(itemsData);
-        console.log("yaya", itemsData);
       } catch (error) {
         console.log(error);
       }
     };
+
+    const fetchJenisPengambilan = async () => {
+      try {
+        const jenisPengambilanData = await GetAllJenisPengambilan();
+        setJenisPengambilan(jenisPengambilanData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchLayanan = async () => {
+      try {
+        const layananData = await GetAllLayanan();
+        setLayanan(layananData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchItems();
+    fetchJenisPengambilan();
+    fetchLayanan();
   }, []);
 
   const handleLayananCheckboxChange = (event, itemId) => {
@@ -31,6 +66,19 @@ const Order = () => {
       [itemId]: event.target.checked ? "" : undefined,
     }));
   };
+
+  const handleInputChange = (event) => {
+    setOrder({...order, [event.target.id]: event.target.value})
+  }
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    
+    const formData = new FormData();
+    formData.append("id_layanan", order.id_layanan);
+    formData.append("id_jenis_pengambilan", order.id_jenis_pengambilan);
+    formData.append("berat", order.berat);
+    formData.append("total_harga", order.total_harga);
+  }
 
   if (!items) {
     return (
@@ -62,16 +110,17 @@ const Order = () => {
             <div className="col-6 cont-input-layanan">
               <select className="form-select" id="durasi" required>
                 <option selected disabled value="">Pilih Durasi</option>
-                <option>Reguler (3 Hari)</option>
-                <option>Express (2 Hari)</option>
-                <option>Same Day</option>
+                {layanan.map((layanan) => (
+                  <option key={layanan.id_layanan} value={layanan.id_layanan}>{layanan.nama_layanan}</option>
+                ))}
               </select>
             </div>
             <div className="col-6">
               <select className="form-select" id="pengambilan" required>
                 <option selected disabled value="">Pilih Pengambilan</option>
-                <option>Delivery</option>
-                <option>Pick Up</option>
+                {jenisPengambilan.map((jenis) => (
+                  <option key={jenis.id_jenis_pengambilan} value={jenis.id_jenis_pengambilan}>{jenis.nama_jenis_pengambilan}</option>
+                ))}
               </select>
             </div>
           </div>

@@ -16,14 +16,12 @@ import { GetDepositByUserId, Deposit } from "../api/apiDeposit";
 
 const Wallet = () => {
   const [user, setUser] = useState(null);
-  const [editedUser, setEditedUser] = useState(null);
   const [deposit, setDeposit] = useState(null);
   const [amount, setAmount] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   const handleModalClose = () => {
     setShowModal(false);
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -31,7 +29,6 @@ const Wallet = () => {
       try {
         const userData = await GetUserById(sessionStorage.getItem("id_user"));
         setUser(userData);
-        setEditedUser({ ...userData });
       } catch (error) {
         console.log(error);
       }
@@ -68,7 +65,6 @@ const Wallet = () => {
       const refreshedDeposit = await GetDepositByUserId(sessionStorage.getItem("id_user"));
 
       setUser(refreshedUser);
-      setEditedUser({ ...refreshedUser });
       setDeposit(refreshedDeposit);
       setAmount("");
       setShowModal(true);
