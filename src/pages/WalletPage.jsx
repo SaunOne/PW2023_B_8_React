@@ -4,30 +4,121 @@ import {
   Form,
   Container,
   Button,
+  Spinner,
+  Modal
 } from "react-bootstrap";
 import { auto } from "@popperjs/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import "./css/Wallet.css";
+import { GetUserById, UpdateProfile } from "../api/apiUsers";
+import { GetDepositByUserId, Deposit } from "../api/apiDeposit";
 
 const Wallet = () => {
+  const [user, setUser] = useState(null);
+  const [editedUser, setEditedUser] = useState(null);
+  const [deposit, setDeposit] = useState(null);
+  const [amount, setAmount] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await GetUserById(sessionStorage.getItem("id_user"));
+        setUser(userData);
+        setEditedUser({ ...userData });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchDepositData = async () => {
+      try {
+        const depositData = await GetDepositByUserId(sessionStorage.getItem("id_user"));
+        setDeposit(depositData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUserData();
+    fetchDepositData();
+  }, []);
+
+  const handleTopUpClick = async () => {
+    try {
+      const updatedUser = { ...user, saldo: user.saldo + parseFloat(amount) };
+      await UpdateProfile(updatedUser);
+
+      const newDeposit = {
+        user_id: user.id_user,
+        metode_pembayaran: document.getElementById("pilihLayanan").value,
+        jumlah_deposit: parseFloat(amount),
+        tipe: "Isi Saldo",
+        tanggal_deposit: new Date().toISOString(),
+      };
+      await Deposit(newDeposit);
+
+      const refreshedUser = await GetUserById(sessionStorage.getItem("id_user"));
+      const refreshedDeposit = await GetDepositByUserId(sessionStorage.getItem("id_user"));
+
+      setUser(refreshedUser);
+      setEditedUser({ ...refreshedUser });
+      setDeposit(refreshedDeposit);
+      setAmount("");
+      setShowModal(true);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (!user) {
+    return (
+      <div className="d-flex justify-content-center align-items-center">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  } else if (!deposit) {
+    return (
+      <div className="d-flex justify-content-center align-items-center">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="row">
         <div className="col-7">
           <Container className="cont">
             <h4 className="d-flex">Your Wallet</h4>
-            <h2 className="d-flex"><FontAwesomeIcon icon={faWallet} /> <strong>IDR 800000</strong></h2>
-            <Form>
+            <h2 className="d-flex mt-2" style={{color: "#014E87"}}><FontAwesomeIcon icon={faWallet} /><strong>IDR {user.saldo}.00</strong></h2>
+            <Form className="mt-2">
               <label htmlFor="jumlahUang" className="d-flex"><strong>Jumlah Uang</strong></label>
-              <input type="number" className="form-control mt-2" id="jumlahUang" name="jumlahUang" placeholder="Masukkan Jumlah Uang" />
+              {/* <input type="number" className="form-control mt-2" id="jumlahUang" name="jumlahUang" placeholder="Masukkan Jumlah Uang" /> */}
+              <Form.Control
+                type="number"
+                placeholder="Masukkan Jumlah Uang"
+                className="mt-2"
+                id="jumlahUang"
+                name="jumlahUang"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                required
+              />
               <br />
               <label htmlFor="pilihLayanan" className="d-flex"><strong>Pilih layanan TopUp:</strong></label>
               <select className="form-select mt-2" aria-label="Default select example" id="pilihLayanan" name="pilihLayanan">
-                <option value="1">Bank Transfer</option>
-                <option value="2">E-Money</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+                <option value="E-Money">E-Money</option>
               </select>
-              <Button className="mt-4 d-flex btn-topUp">
+              <Button className="mt-4 d-flex btn-topUp" onClick={handleTopUpClick}>
                 Isi Saldo
               </Button>
             </Form>
@@ -50,20 +141,15 @@ const Wallet = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th>101</th>
-                        <td>Bank Transfer</td>
-                        <td style={{ color: "green" }}>+Rp100.000,00</td>
-                        <td>Isi Saldo</td>
-                        <td>10-10-2023 <strong>20:59</strong></td>
-                      </tr>
-                      <tr>
-                        <th>102</th>
-                        <td>Wallet</td>
-                        <td style={{ color: "red" }}>-Rp56.000,00</td>
-                        <td>Pembayaran</td>
-                        <td>13-10-2023 <strong>16:32</strong></td>
-                      </tr>
+                      {deposit.map((depositItem) => (
+                        <tr key={depositItem.id_deposit}>
+                          <th>{depositItem.id_deposit}</th>
+                          <td>{depositItem.metode_pembayaran}</td>
+                          <td style={{ color: "green" }}>+IDR {depositItem.jumlah_deposit}</td>
+                          <td>Isi Saldo</td>
+                          <td>{depositItem.tanggal_deposit}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -72,6 +158,20 @@ const Wallet = () => {
           </Container>
         </div>
       </div>
+
+      <Modal show={showModal} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Deposit Success</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Berhasil Deposit Wallet sebesar IDR {amount}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={handleModalClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

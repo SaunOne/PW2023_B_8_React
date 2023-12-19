@@ -6,17 +6,43 @@ import {
 } from "react-bootstrap";
 import { Steps } from 'rsuite';
 import "../css/PilihLayanan.css";
+import { GetAllItems } from "../../api/apiItem";
 
 const Order = () => {
   const [showJumlahLayanan, setShowJumlahLayanan] = useState(false);
+  const [items, setItems] = useState([]);
 
-  const handleLayananCheckboxChange = (event) => {
-    setShowJumlahLayanan(event.target.checked);
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const itemsData = await GetAllItems();
+        setItems(itemsData);
+        console.log("yaya", itemsData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchItems();
+  }, []);
+
+  const handleLayananCheckboxChange = (event, itemId) => {
+    setShowJumlahLayanan((prev) => ({
+      ...prev,
+      [itemId]: event.target.checked ? "" : undefined,
+    }));
   };
+
+  if (!items) {
+    return (
+      <div className="d-flex justify-content-center align-items-center">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
 
   return (
     <>
-      <div className="container steps">
+      <div className="container steps" style={{ maxWidth: "45%" }}>
         <Steps current={1}>
           <Steps.Item title="Laundry Page" />
           <Steps.Item title="Pilih Layanan" />
@@ -54,29 +80,35 @@ const Order = () => {
               <label className="d-flex mb-2" htmlFor="berat"><strong>Berat Laundry (Kg)</strong></label>
               <input type="number" className="form-control" id="berat" placeholder="Masukkan berat laundry" />
             </div>
-            <div class="col-6">
+            <div className="col-6">
               <p className="d-flex"><strong>Pilih Layanan Lainnya:</strong></p>
-              <div className="row mb-2">
-                <div className="col-3">
-                  <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="jaket" onChange={handleLayananCheckboxChange} />
-                    <label className="form-check-label d-flex" htmlFor="jaket">
-                      Jaket
-                    </label>
+              {items.map((item) => (
+                <div className="row mb-2" key={item.id_item}>
+                  <div className="col-4">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={item.nama_item}
+                        id={`item_${item.id_item}`}
+                        onChange={(e) => handleLayananCheckboxChange(e, item.id_item)}
+                      />
+                      <label className="form-check-label d-flex" htmlFor={`item_${item.id_item}`}>
+                        {item.nama_item}
+                      </label>
+                    </div>
                   </div>
+                  {showJumlahLayanan[item.id_item] !== undefined && (
+                    <div className="col-8">
+                      <input 
+                        className="form-control" 
+                        type="number" 
+                        placeholder="Masukkan Jumlah" 
+                        id={`layananJumlah_${item.id_item}`} />
+                    </div>
+                  )}
                 </div>
-                {showJumlahLayanan && (
-                  <div className="col-9">
-                    <input className="form-control" type="number" placeholder="Masukkan Jumlah" id="jaketJumlah" />
-                  </div>
-                )}
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="selimut" />
-                <label className="form-check-label d-flex" htmlFor="selimut">
-                  Selimut
-                </label>
-              </div>
+              ))}
             </div>
           </div>
           <div className="mt-4 d-flex justify-content-end">

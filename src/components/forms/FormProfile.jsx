@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
-import { Button, Alert, Spinner, Form, FormControl } from "react-bootstrap";
+import { Button, Alert, Spinner, Form } from "react-bootstrap";
 import { useState } from "react";
 import { GetUserById, UpdateProfile } from "../../api/apiUsers";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBackward, faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
+
 const FormProfile = () => {
     const [isEditMode, setEditMode] = useState(false);
     const [user, setUser] = useState(null);
@@ -60,17 +63,17 @@ const FormProfile = () => {
                     <div className="col d-flex justify-content-center">
                         <input type="file" name="imageInput" id="imageInput" accept="image/*" hidden disabled={!isEditMode} />
                         <label htmlFor="imageInput">
-                            <img className="rounded-circle img-profile" src="../assets/images/profile2.png" alt="Profile Image" style={{ maxWidth: 200 }} />
+                            <img className="rounded-circle img-profile" src="./src/assets/images/profile2.png" alt="Profile Image" style={{ maxWidth: 200 }} />
                         </label>
                     </div>
                     <div className="mt-5 d-flex justify-content-center">
                         {!isEditMode && (
-                            <button type="button" className="btn btn-primary ms-2" id="editBtn" onClick={handleEditClick}>Edit Porfile</button>
+                            <button type="button" className="btn btn-primary ms-2" id="editBtn" onClick={handleEditClick}><FontAwesomeIcon icon={faEdit}/> Edit Porfile</button>
                         )}
                         {isEditMode && (
                             <>
-                                <button type="button" className="btn btn-danger" id="cancelBtn" onClick={handleCancelClick}>Batal</button>
-                                <button type="button" className="btn btn-success ms-2" id="saveBtn" onClick={handleSaveClick}>Simpan</button>
+                                <button type="button" className="btn btn-danger" id="cancelBtn" onClick={handleCancelClick}><FontAwesomeIcon icon={faBackward}/>Batal</button>
+                                <button type="button" className="btn btn-success ms-2" id="saveBtn" onClick={handleSaveClick}><FontAwesomeIcon icon={faSave}/>Simpan</button>
                             </>
                         )}
                     </div>
