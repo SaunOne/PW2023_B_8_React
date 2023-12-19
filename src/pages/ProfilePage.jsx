@@ -29,7 +29,7 @@ const Profile = () => {
     const formData = new FormData();
     console.log(`isi tumnail sebelum masuk : ${thumbnail}`);
     formData.append("image_profile", thumbnail);
-    formData.append("email", "lololasdo09@gmail.com");
+    formData.append("email", "lasdo09@gmail.com");
     console.log(`isi tumnail sesudah masuk : ${formData.get("image_profile")}`);
 
     UpdateProfile(formData)
