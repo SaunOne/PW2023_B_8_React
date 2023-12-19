@@ -13,11 +13,13 @@ import { faUser, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Stack from "react-bootstrap/Stack";
 import { GetUserByLogin } from "../../api/apiUsers";
+import { getImage } from "../../api";
 
 const ProfileModal = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(Object);
   const [isLoading, setIsLoading] = useState(false);
+  const [image,setImage] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -25,14 +27,22 @@ const ProfileModal = () => {
     
     var temp =  sessionStorage.getItem('user');
     setUser(JSON.parse(temp));
-    console.log(`sudah : ${user.fullname}`);
+    GetUserByLogin().then((value) => {
+      setImage(getImage(value.image_profile));
+   })
     setIsLoading(false);
+    
   }, []);
 
   const logout = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("user");
     navigate("/login");
+  };
+  const test = () => {
+    
+    console.log(`ini : ${image}`)
+    console.log(`sudah : ${user.fullname}`);
   };
 
   return (
@@ -57,7 +67,17 @@ const ProfileModal = () => {
                     className="col-3 d-flex align-items-center "
                     style={{ height: "80px" }}
                   >
-                    <FontAwesomeIcon icon={faUser} size="2x" />
+                    {image? (
+                      <img
+                      src={URL.createObjectURL(image)}
+                      alt="Thumbnail"
+                      className="w-100 h-100 object-fit-cover"
+                    />
+                    ) : (
+                      <FontAwesomeIcon icon={faUser} size="2x" />
+                    )}
+                   
+
                   </div>
                   <div
                     className="col d-flex flex-column justify-content-center align-items-start"
@@ -117,7 +137,7 @@ const ProfileModal = () => {
           </div>
           <div className="row"></div>
           <div className="row">
-            <Button variant="danger" onClick={() => logout()}>
+            <Button variant="danger" onClick={() => test()}>
               Logout
             </Button>
           </div>

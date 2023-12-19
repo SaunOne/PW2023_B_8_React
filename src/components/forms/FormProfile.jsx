@@ -15,23 +15,25 @@ const FormProfile = () => {
   const [image, setImage] = useState();
   const [pushImage, setPushImage] = useState(null);
   const [isPending, setIsPending] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        GetUserById(sessionStorage.getItem("id_user")).then((value) => {
-          setUser(value);
-          
+    setIsLoading(true);
+
+    try {
+      GetUserById(sessionStorage.getItem("id_user")).then((value) => {
+        setUser(value);
+        setImage(getImage(value.image_profile));
         //   const url = URL.createObjectURL(getImage(value.image_profile));
-          console.log('ini urlnya :'  + getImage( value.image_profile));
-         
-          setEditedUser({ ...value });
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchUserData();
+        console.log("ini urlnya :" + getImage(value.image_profile));
+
+        setEditedUser({ ...value });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    setIsLoading(true);
   }, []);
 
   const handleEditClick = () => {
@@ -82,9 +84,9 @@ const FormProfile = () => {
         <div className="col-3">
           <div className="col d-flex justify-content-center">
             <div className="pt-4 img-preview text-center position-relative mb-3">
-              {pushImage ? (
+              {image ? (
                 <img
-                  src={URL.createObjectURL(pushImage)}
+                  src={{}}
                   className="rounded-circle img-profile"
                   alt="Profile Image"
                 />
@@ -231,6 +233,11 @@ const FormProfile = () => {
           />
         </div>
       </div>
+      <img
+        src={URL.createObjectURL(image)}
+        className="rounded-circle img-profile"
+        alt="Profile Image"
+      />
     </Form>
   );
 };
