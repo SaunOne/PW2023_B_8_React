@@ -45,7 +45,7 @@ const DashboardPage = () => {
       .catch((err) => {
         console.log(err);
       });
-      setIsLoading(false);
+    setIsLoading(false);
   }, []);
 
   return (
@@ -138,35 +138,37 @@ const DashboardPage = () => {
 
           {/* Row 4 (Desktop) */}
           {isLoading ? (
-             <div className="text-center">
-            <Spinner
-              as="span"
-              animation="border"
-              variant="primary"
-              size="lg"
-              role="status"
-              aria-hidden="true"
-            />
-            <h6 className="mt-2 mb-0">Loading...</h6>
-          </div>
+            <div className="text-center">
+              <Spinner
+                as="span"
+                animation="border"
+                variant="primary"
+                size="lg"
+                role="status"
+                aria-hidden="true"
+              />
+              <h6 className="mt-2 mb-0">Loading...</h6>
+            </div>
           ) : (
             <Row>
-            {layanan?.map((item,index) => (
-              <Col>
-                <div className="home-content4 mt-5 mb-5">
-                  <div className="img-ly1">
-                    <img src={layanan1Img} alt="" style={{ height: "130px" }} />
+              {layanan?.map((item, index) => (
+                <Col>
+                  <div className="home-content4 mt-5 mb-5">
+                    <div className="img-ly1">
+                      <img
+                        src={layanan1Img}
+                        alt=""
+                        style={{ height: "130px" }}
+                      />
+                    </div>
+                    <div>
+                      <h4>{item.nama_layanan}</h4>
+                    </div>
                   </div>
-                  <div>
-                    <h4>{item.nama_layanan}</h4>
-                  </div>  
-                </div>
-              </Col>
-            ))}
+                </Col>
+              ))}
             </Row>
           )}
-          
-          
 
           {/* Row 4 (Mobile) */}
           <Row className="d-flex row d-sm-none" style={{ height: "400px" }}>
@@ -298,11 +300,12 @@ const DashboardPage = () => {
               </div>
               <h4 style={{ marginTop: "20px" }}>
                 <strong className="text-blue3">Tunggu Apa Lagi</strong>{" "}
-          
               </h4>
               <p className="">
-              Dengan set sat set, baju akan segera menjadi bersih, memastikan kebersihan optimal setiap kali dicuci. 
-              Proses yang efisien ini memungkinkan Anda menikmati pakaian yang segar dan terawat dengan cepat setiap harinya.
+                Dengan set sat set, baju akan segera menjadi bersih, memastikan
+                kebersihan optimal setiap kali dicuci. Proses yang efisien ini
+                memungkinkan Anda menikmati pakaian yang segar dan terawat
+                dengan cepat setiap harinya.
               </p>
               <div
                 className="btn-start"

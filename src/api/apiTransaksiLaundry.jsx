@@ -33,9 +33,9 @@ export const GetTransaksiLaundryById = async (id) => {
 };
 
 // Menampilkan transaksi laundry berdasarkan ID user
-export const GetTransaksiLaundryByIdUser = async (id) => {
+export const GetTransaksiLaundryByIdUser = async () => {
   try {
-    const response = await useAxios.get(`/transaksiLaundry/user/${id}`, {
+    const response = await useAxios.get(`/transaksiLaundryByUser`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${sessionStorage.getItem("token")}`,

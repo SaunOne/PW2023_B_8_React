@@ -10,7 +10,7 @@ import Wallet from "../pages/WalletPage";
 import TopNavbar from "../components/TopNavbar";
 import Payment from "../pages/TransaksiLaundry/PaymentPage";
 import Order from "../pages/TransaksiLaundry/OrderPage";
-import History from "../pages/History";
+import History from "../pages/HistoryPage";
 import OurTeam from "../pages/greeting/OurTeamPage";
 import About from "../pages/greeting/AboutPage";
 import AdminLayout from "../layouts/AdminLayout";
