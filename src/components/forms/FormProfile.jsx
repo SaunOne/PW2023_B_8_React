@@ -6,21 +6,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackward, faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FaImage, FaPlusSquare } from "react-icons/fa";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { getImage } from "../../api";
 
 const FormProfile = () => {
   const [isEditMode, setEditMode] = useState(false);
   const [user, setUser] = useState(null);
   const [editedUser, setEditedUser] = useState(null);
   const [image, setImage] = useState();
-  const [pushImage, setPushImage] = useState();
+  const [pushImage, setPushImage] = useState(null);
   const [isPending, setIsPending] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userData = await GetUserById(sessionStorage.getItem("id_user"));
-        setUser(userData);
-        setEditedUser({ ...userData });
+        GetUserById(sessionStorage.getItem("id_user")).then((value) => {
+          setUser(value);
+          
+        //   const url = URL.createObjectURL(getImage(value.image_profile));
+          console.log('ini urlnya :'  + getImage( value.image_profile));
+         
+          setEditedUser({ ...value });
+        });
       } catch (error) {
         console.log(error);
       }
@@ -39,9 +45,10 @@ const FormProfile = () => {
 
   const handleSaveClick = async () => {
     try {
-        editedUser.image_profile = pushImage;
+      console.log(`isi image ${pushImage}`);
+      editedUser.image_profile = pushImage;
       await UpdateProfile(editedUser);
-        setPushImage(pushImage);
+
       setUser({ ...editedUser });
       setEditMode(false);
     } catch (error) {
@@ -51,13 +58,14 @@ const FormProfile = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log("sdf");
     setEditedUser((prevUser) => ({ ...prevUser, [name]: value }));
   };
 
   const handleImage = (event) => {
     console.log(`isi image : ${event.target.files[0]}`);
-    
-    setThumbnail(event.target.files[0]);
+
+    setPushImage(event.target.files[0]);
   };
 
   if (!user) {
@@ -73,24 +81,20 @@ const FormProfile = () => {
       <div className="row mt-3">
         <div className="col-3">
           <div className="col d-flex justify-content-center">
-            <div
-              className="pt-4 img-preview text-center position-relative mb-3"
-              
-            >
-              {image ? (
+            <div className="pt-4 img-preview text-center position-relative mb-3">
+              {pushImage ? (
                 <img
-                  
-                  src={URL.createObjectURL(image)}
+                  src={URL.createObjectURL(pushImage)}
                   className="rounded-circle img-profile"
                   alt="Profile Image"
-                  style={{ maxWidth: 250 }}
                 />
               ) : (
-                <FontAwesomeIcon 
-                className="mt-2"
-                onClick={() => document.getElementById("pushImage").click()}
-                icon={faUser} size="6x"  />
-                
+                <FontAwesomeIcon
+                  className="mt-2"
+                  onClick={() => document.getElementById("pushImage").click()}
+                  icon={faUser}
+                  size="6x"
+                />
               )}
               <Button
                 variant="primary"
@@ -99,7 +103,9 @@ const FormProfile = () => {
                 size="sm"
                 className="mt-3"
                 onClick={() => document.getElementById("pushImage").click()}
-              >Edit Photo</Button>
+              >
+                Edit Photo
+              </Button>
 
               <input
                 type="file"

@@ -140,7 +140,7 @@ const Profile = () => {
                 <span>Simpan</span>
               )}
             </Button>
-          </Modal.Footer>
+          </Modal.Footer> 
         </Form>
       </Modal>
 
