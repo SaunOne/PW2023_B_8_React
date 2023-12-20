@@ -1,40 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import AdminPageBackground from "./adminPageBackground";
-import SidenavCustom from "./sideNav";
+import AdminPageBackground from "../adminPageBackground";
 import { Button, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { DeleteLayanan, GetAllLayanan } from "../../api/apiLayanan";
-import { Link } from "react-router-dom";
-import "./css/ShowDataUser.css";
-import UpdateUserAccount from "./updateUserPage";
-import UpdateLayananLaundry from "./updateLayananPage";
+import "../css/ShowDataUser.css";
+import { DeleteItem, GetAllItems } from "../../../api/apiItem";
+import UpdateItemLaundry from "./updateItemPage";
 
-const ShowDataLayanan = () => {
+const ShowDataItem = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [layanans, setLayanan] = useState([]);
+  const [itemList, setItemList] = useState([]);
   const [isPending, setIsPending] = useState(false);
 
-  const deleteLayanan = (id) => {
+  const deleteItem = (id) => {
     setIsPending(true);
-    DeleteLayanan(id)
+    DeleteItem(id)
       .then((response) => {
         // setIsPending(false);
         toast.success(response.message);
-        showLayanan();
+        showItem();
       })
       .catch((err) => {
         console.log(err);
         setIsPending(false);
-        showLayanan();
+        showItem();
       });
   };
-  const showLayanan = () => {
+  const showItem = () => {
     setIsLoading(true);
-    GetAllLayanan()
+    GetAllItems()
       .then((response) => {
-        setLayanan(response);
+        setItemList(response);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -43,15 +40,9 @@ const ShowDataLayanan = () => {
       });
   };
   useEffect(() => {
-    showLayanan();
+    showItem();
   }, []);
   const [selectedOption, setSelectedOption] = useState("option1");
-
-  const logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-    navigate("/");
-  };
 
   return (
     <AdminPageBackground>
@@ -66,7 +57,7 @@ const ShowDataLayanan = () => {
                 backgroundColor: "rgba(0, 0, 0, 0.4)",
               }}
             >
-              Show Data Layanan
+              Show Data Item
             </h1>
             <div className="row">
               <div className="col-8">
@@ -100,26 +91,24 @@ const ShowDataLayanan = () => {
                   <thead>
                     <tr>
                       <th scope="col">No</th>
-                      <th scope="col">Nama Layanan</th>
-                      <th scope="col">Durasi</th>
+                      <th scope="col">Nama Item</th>
                       <th scope="col">Harga</th>
-                      <th scope="col">Note</th>
+                      <th scope="col">Deskripsi</th>
                       <th scope="col">Edit</th>
                       <th scope="col">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {layanans.map((layanan, index) => (
-                      <tr key={layanan.id}>
+                    {itemList.map((item, index) => (
+                      <tr key={item.id}>
                         <th scope="row">{index + 1}</th>
-                        <td>{layanan.nama_layanan}</td>
-                        <td>{layanan.durasi}</td>
-                        <td>{layanan.harga}</td>
-                        <td>{layanan.note}</td>
+                        <td>{item.nama_item}</td>
+                        <td>{item.harga}</td>
+                        <td>{item.deskripsi}</td>
                         <td>
-                          <UpdateLayananLaundry
-                            layanan={layanan}
-                            onClose={showLayanan}
+                          <UpdateItemLaundry
+                            item={item}
+                            onClose={showItem}
                           />
                         </td>
                         <td className="delete-col">
@@ -140,7 +129,7 @@ const ShowDataLayanan = () => {
                           ) : (
                             <Button
                               variant="danger"
-                              onClick={() => deleteLayanan(layanan.id_layanan)}
+                              onClick={() => deleteItem(item.id_item)}
                               style={{ marginRight: "7px", width: "70px" }}
                             >
                               Hapus
@@ -160,4 +149,4 @@ const ShowDataLayanan = () => {
   );
 };
 
-export default ShowDataLayanan;
+export default ShowDataItem;

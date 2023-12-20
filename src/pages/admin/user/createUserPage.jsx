@@ -1,23 +1,12 @@
 // src/pages/adminPage/createUserPage.jsx
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Button, Form, Spinner } from "react-bootstrap";
-import AdminPageBackground from "../admin/adminPageBackground";
-import SidenavCustom from "../admin/sideNav";
-import CustomNavbar from "../admin/topNav";
-import { Row, Col } from "rsuite";
-import { Register } from "../../api/apiAuth";
+import AdminPageBackground from "../adminPageBackground";
+import { Register } from "../../../api/apiAuth";
 import { useNavigate } from "react-router-dom";
 
 const CreateUser = () => {
   const [isPending, setIsPending] = useState(false);
-  const [isSidenavExpanded, setSidenavExpanded] = useState(true);
-  const logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-    navigate("/");
-  };
   const navigate = useNavigate();
   const [data, setData] = useState({
     fullname: "",

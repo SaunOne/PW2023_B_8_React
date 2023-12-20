@@ -6,7 +6,11 @@ import AdminPageBackground from "../adminPageBackground";
 import { Button, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 // import { DeleteUser, GetAllUser } from "../../api/apiUsers";
-import { GetAllJenisPengambilan, DeleteJenisPengambilan, UpdateJenisPengambilan } from "../../../api/apiJenisPengambilan";
+import {
+  GetAllJenisPengambilan,
+  DeleteJenisPengambilan,
+  UpdateJenisPengambilan,
+} from "../../../api/apiJenisPengambilan";
 import { Link } from "react-router-dom";
 import "../css/ShowDataUser.css";
 import UpdateJenisPengambilanPage from "./UpdateJenisPengambilan";
@@ -101,19 +105,24 @@ const ShowDataJenisPengambilan = () => {
                 <table className="table table-hover">
                   <thead>
                     <tr>
-                      <th scope="col">ID</th>
+                      <th scope="col">No</th>
                       <th scope="col">Nama Jenis Pengambilan</th>
                       <th scope="col">Harga</th>
+                      <th scope="col">Edit</th>
+                      <th scope="col">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {jenisPengambilans.map((jenisPengambilan) => (
+                    {jenisPengambilans.map((jenisPengambilan, index) => (
                       <tr key={jenisPengambilan.id_jenis_pengambilan}>
-                        <th>{jenisPengambilan.id_jenis_pengambilan}</th>
+                        <th scope="row">{index + 1}</th>
                         <td>{jenisPengambilan.nama_jenis_pengambilan}</td>
                         <td>{jenisPengambilan.harga}</td>
                         <td>
-                          <UpdateJenisPengambilanPage jenisPengambilan={jenisPengambilan} onClose={showJenisPengambilan} />
+                          <UpdateJenisPengambilanPage
+                            jenisPengambilan={jenisPengambilan}
+                            onClose={showJenisPengambilan}
+                          />
                         </td>
                         <td className="delete-col">
                           {isPending ? (
@@ -133,7 +142,11 @@ const ShowDataJenisPengambilan = () => {
                           ) : (
                             <Button
                               variant="danger"
-                              onClick={() => deleteJenisPengambilan(jenisPengambilan.id_jenis_pengambilan)}
+                              onClick={() =>
+                                deleteJenisPengambilan(
+                                  jenisPengambilan.id_jenis_pengambilan
+                                )
+                              }
                               style={{ marginRight: "7px", width: "70px" }}
                             >
                               Hapus

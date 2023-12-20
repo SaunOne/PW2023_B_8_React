@@ -1,22 +1,14 @@
 import { React, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import AdminPageBackground from "../admin/adminPageBackground";
-import SidenavCustom from "../admin/sideNav";
 import { Button, Form, Modal } from "react-bootstrap";
-import { UpdateUser } from "../../api/apiUsers";
 import { toast } from "react-toastify";
+import { UpdateLayanan } from "../../../api/apiLayanan";
 
-const UpdateUserAccount = ({ user, onClose }) => {
+
+const UpdateLayananLaundry = ({ layanan, onClose }) => {
   const [show, setShow] = useState(false);
-  const [data, setData] = useState(user);
+  const [data, setData] = useState(layanan);
   const [isPending, setIsPending] = useState(false);
 
-  const logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-    navigate("/");
-  };
   const handleClose = () => {
     setShow(false);
     onClose();
@@ -24,7 +16,7 @@ const UpdateUserAccount = ({ user, onClose }) => {
   const handleShow = () => {
     setShow(true);
     console.log("tes: ", data);
-  }
+  };
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
@@ -32,8 +24,8 @@ const UpdateUserAccount = ({ user, onClose }) => {
     event.preventDefault();
     setIsPending(true);
     console.log("tes: ", data);
-    console.log("tes id: ", data.id_user);
-    UpdateUser(data)
+    console.log("tes id: ", data.id_layanan);
+    UpdateLayanan(data)
       .then((response) => {
         setIsPending(false);
         toast.success(response.message);
@@ -48,7 +40,11 @@ const UpdateUserAccount = ({ user, onClose }) => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow} style={{ marginRight: '8px'}}>
+      <Button
+        variant="primary"
+        onClick={handleShow}
+        style={{ marginRight: "8px" }}
+      >
         Update
       </Button>
       <Modal
@@ -66,74 +62,61 @@ const UpdateUserAccount = ({ user, onClose }) => {
               borderRadius: "10px",
             }}
           >
-            <h1 className="mb-3 text-center">Update User</h1>
+            <h1 className="mb-3 text-center">Update Layanan</h1>
+            <div className="row mb-2"></div>
             <div className="row mb-2">
               <div className="col-md-12">
-                <label className="d-flex">Nama Lengkap</label>
+                <label className="d-flex">Nama Layanan</label>
                 <input
                   type="text"
-                  label="Fullname"
-                  name="fullname"
+                  label="Nama layanan"
+                  name="nama_layanan"
                   onChange={handleChange}
-                  placeholder="Masukkan Nama"
+                  placeholder="Masukkan Nama Layanan"
                   className="form-control"
-                  value={data?.fullname}
+                  value={data?.nama_layanan}
                 />
               </div>
             </div>
             <div className="row mb-2">
               <div className="col-md-12">
-                <label className="d-flex">Username</label>
+                <label className="d-flex">Durasi</label>
+                <input
+                  type="number"
+                  label="Durasi"
+                  name="durasi"
+                  onChange={handleChange}
+                  placeholder="Masukkan Durasi"
+                  className="form-control"
+                  value={data?.durasi}
+                />
+              </div>
+            </div>
+            <div className="row mb-2">
+              <div className="col-md-12">
+                <label className="d-flex">Harga</label>
+                <input
+                  type="number"
+                  label="Harga"
+                  name="harga"
+                  onChange={handleChange}
+                  placeholder="Masukkan Harga"
+                  className="form-control"
+                  value={data?.harga}
+                />
+              </div>
+            </div>
+            <div className="row mb-2">
+              <div className="col-md-12">
+                <label className="d-flex">Note</label>
                 <input
                   type="text"
-                  label="Username"
-                  name="username"
+                  label="Note"
+                  name="note"
                   onChange={handleChange}
-                  placeholder="Masukkan Username"
+                  placeholder="Masukkan Note"
                   className="form-control"
-                  value={data?.username}
-                />
-              </div>
-            </div>
-            <div className="row mb-2">
-              <div className="col-md-12">
-                <label className="d-flex">Email</label>
-                <input
-                  type="email"
-                  label="Email"
-                  name="email"
-                  onChange={handleChange}
-                  placeholder="Masukkan Email"
-                  className="form-control"
-                  value={data?.email}
-                />
-              </div>
-            </div>
-            <div className="row mb-2">
-              <div className="col-md-12">
-                <label className="d-flex">Password</label>
-                <input
-                  type="password"
-                  label="Password"
-                  name="password"
-                  onChange={handleChange}
-                  placeholder="Masukkan Password"
-                  className="form-control"
-                  value={data?.email}
-                />
-              </div>
-            </div>
-            <div className="row mb-2">
-              <div className="col-md-12">
-                <label className="d-flex">Alamat</label>
-                <input
-                  type="text"
-                  label="alamat"
-                  name="alamat"
-                  onChange={handleChange}
-                  placeholder="Masukkan Alamat"
-                  className="form-control"
-                  value={data?.alamat}
+                  value={data?.note}
                 />
               </div>
             </div>
@@ -160,4 +143,4 @@ const UpdateUserAccount = ({ user, onClose }) => {
   );
 };
 
-export default UpdateUserAccount;
+export default UpdateLayananLaundry;

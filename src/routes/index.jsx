@@ -19,18 +19,18 @@ import Admin from "../pages/admin/AdminPage";
 import TampilImage from "../components/modals/tampilImage";
 import Footer from "../components/footer";
 
-import AdminShowUser from "../pages/admin/showDataUser";
-import AdminCreateUser from "../pages/admin/createUserPage";
-import AdminUpdateUser from "../pages/admin/updateUserPage";
-import AdminShowLayanan from "../pages/admin/showDataLayananPage";
-import AdminUpdateLayanan from "../pages/admin/updateLayananPage";
+import AdminShowUser from "../pages/admin/user/showDataUser";
+import AdminCreateUser from "../pages/admin/user/createUserPage";
+import AdminUpdateUser from "../pages/admin/user/updateUserPage";
+import AdminShowLayanan from "../pages/admin/layanan/showDataLayananPage";
+import AdminUpdateLayanan from "../pages/admin/layanan/updateLayananPage";
+import CreateLayanan from "../pages/admin/layanan/createLayananPage";
 import AdminSideNav from "../pages/admin/sideNav";
 import ShowDataJenisPengambilan from "../pages/admin/jenis_pengambilan/ShowJenisPengambilan";
 import CreateJenisPengambilanPage from "../pages/admin/jenis_pengambilan/CreateJenisPengambilan";
-import CreateLayanan from "../pages/admin/createLayananPage";
-import CreateItem from "../pages/admin/createItemPage";
-import ShowDataItem from "../pages/admin/showDataItemPage";
-import UpdateItemLaundry from "../pages/admin/updateItemPage";
+import CreateItem from "../pages/admin/item/createItemPage";
+import ShowDataItem from "../pages/admin/item/showDataItemPage";
+import UpdateItemLaundry from "../pages/admin/item/updateItemPage";
 
 const router = createBrowserRouter([
   {
@@ -151,12 +151,14 @@ const router = createBrowserRouter([
       {
         path: "/admin/createDataJenisPengambilan",
         element: <CreateJenisPengambilanPage />,
-        path: "/admin/showDataLayanan",
-        element: <AdminShowLayanan />,
       },
       {
         path: "/admin/createLayanan",
         element: <CreateLayanan />,
+      },
+      {
+        path: "/admin/showDataLayanan",
+        element: <ShowDataJenisPengambilan />,
       },
       {
         path: "/admin/updateLayanan",

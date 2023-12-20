@@ -1,11 +1,7 @@
 import { React, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import AdminPageBackground from "../admin/adminPageBackground";
-import SidenavCustom from "../admin/sideNav";
 import { Button, Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { UpdateItem } from "../../api/apiItem";
+import { UpdateItem } from "../../../api/apiItem";
 
 
 const UpdateItemLaundry = ({ item, onClose }) => {
@@ -13,11 +9,6 @@ const UpdateItemLaundry = ({ item, onClose }) => {
   const [data, setData] = useState(item);
   const [isPending, setIsPending] = useState(false);
 
-  const logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-    navigate("/");
-  };
   const handleClose = () => {
     setShow(false);
     onClose();

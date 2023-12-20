@@ -1,24 +1,13 @@
 import { React, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import AdminPageBackground from "../admin/adminPageBackground";
-import SidenavCustom from "../admin/sideNav";
 import { Button, Form, Modal } from "react-bootstrap";
-import { UpdateUser } from "../../api/apiUsers";
+import { UpdateUser } from "../../../api/apiUsers";
 import { toast } from "react-toastify";
-import { UpdateLayanan } from "../../api/apiLayanan";
 
-
-const UpdateLayananLaundry = ({ layanan, onClose }) => {
+const UpdateUserAccount = ({ user, onClose }) => {
   const [show, setShow] = useState(false);
-  const [data, setData] = useState(layanan);
+  const [data, setData] = useState(user);
   const [isPending, setIsPending] = useState(false);
 
-  const logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-    navigate("/");
-  };
   const handleClose = () => {
     setShow(false);
     onClose();
@@ -26,7 +15,7 @@ const UpdateLayananLaundry = ({ layanan, onClose }) => {
   const handleShow = () => {
     setShow(true);
     console.log("tes: ", data);
-  };
+  }
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
@@ -34,8 +23,8 @@ const UpdateLayananLaundry = ({ layanan, onClose }) => {
     event.preventDefault();
     setIsPending(true);
     console.log("tes: ", data);
-    console.log("tes id: ", data.id_layanan);
-    UpdateLayanan(data)
+    console.log("tes id: ", data.id_user);
+    UpdateUser(data)
       .then((response) => {
         setIsPending(false);
         toast.success(response.message);
@@ -50,11 +39,7 @@ const UpdateLayananLaundry = ({ layanan, onClose }) => {
 
   return (
     <>
-      <Button
-        variant="primary"
-        onClick={handleShow}
-        style={{ marginRight: "8px" }}
-      >
+      <Button variant="primary" onClick={handleShow} style={{ marginRight: '8px'}}>
         Update
       </Button>
       <Modal
@@ -72,61 +57,74 @@ const UpdateLayananLaundry = ({ layanan, onClose }) => {
               borderRadius: "10px",
             }}
           >
-            <h1 className="mb-3 text-center">Update Layanan</h1>
-            <div className="row mb-2"></div>
+            <h1 className="mb-3 text-center">Update User</h1>
             <div className="row mb-2">
               <div className="col-md-12">
-                <label className="d-flex">Nama Layanan</label>
+                <label className="d-flex">Nama Lengkap</label>
                 <input
                   type="text"
-                  label="Nama layanan"
-                  name="nama_layanan"
+                  label="Fullname"
+                  name="fullname"
                   onChange={handleChange}
-                  placeholder="Masukkan Nama Layanan"
+                  placeholder="Masukkan Nama"
                   className="form-control"
-                  value={data?.nama_layanan}
+                  value={data?.fullname}
                 />
               </div>
             </div>
             <div className="row mb-2">
               <div className="col-md-12">
-                <label className="d-flex">Durasi</label>
-                <input
-                  type="number"
-                  label="Durasi"
-                  name="durasi"
-                  onChange={handleChange}
-                  placeholder="Masukkan Durasi"
-                  className="form-control"
-                  value={data?.durasi}
-                />
-              </div>
-            </div>
-            <div className="row mb-2">
-              <div className="col-md-12">
-                <label className="d-flex">Harga</label>
-                <input
-                  type="number"
-                  label="Harga"
-                  name="harga"
-                  onChange={handleChange}
-                  placeholder="Masukkan Harga"
-                  className="form-control"
-                  value={data?.harga}
-                />
-              </div>
-            </div>
-            <div className="row mb-2">
-              <div className="col-md-12">
-                <label className="d-flex">Note</label>
+                <label className="d-flex">Username</label>
                 <input
                   type="text"
-                  label="Note"
-                  name="note"
+                  label="Username"
+                  name="username"
                   onChange={handleChange}
-                  placeholder="Masukkan Note"
+                  placeholder="Masukkan Username"
                   className="form-control"
-                  value={data?.note}
+                  value={data?.username}
+                />
+              </div>
+            </div>
+            <div className="row mb-2">
+              <div className="col-md-12">
+                <label className="d-flex">Email</label>
+                <input
+                  type="email"
+                  label="Email"
+                  name="email"
+                  onChange={handleChange}
+                  placeholder="Masukkan Email"
+                  className="form-control"
+                  value={data?.email}
+                />
+              </div>
+            </div>
+            <div className="row mb-2">
+              <div className="col-md-12">
+                <label className="d-flex">Nomor Telepon</label>
+                <input
+                  type="number"
+                  label="Nomor Telepon"
+                  name="no_telp"
+                  onChange={handleChange}
+                  placeholder="Nomor Telepon"
+                  className="form-control"
+                  value={data?.no_telp}
+                />
+              </div>
+            </div>
+            <div className="row mb-2">
+              <div className="col-md-12">
+                <label className="d-flex">Alamat</label>
+                <input
+                  type="text"
+                  label="alamat"
+                  name="alamat"
+                  onChange={handleChange}
+                  placeholder="Masukkan Alamat"
+                  className="form-control"
+                  value={data?.alamat}
                 />
               </div>
             </div>
@@ -153,4 +151,4 @@ const UpdateLayananLaundry = ({ layanan, onClose }) => {
   );
 };
 
-export default UpdateLayananLaundry;
+export default UpdateUserAccount;

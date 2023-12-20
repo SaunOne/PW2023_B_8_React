@@ -33,7 +33,6 @@ const CreateJenisPengambilanPage = () => {
     return (
         <AdminPageBackground>
             <div className="row d-flex">
-                <div style={{ maxWidth: "250px" }}>{/* <SidenavCustom /> */}</div>
                 <div className="col">
                     <div className="container-fluid px-4 py-2">
                         <div

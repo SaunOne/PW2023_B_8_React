@@ -1,43 +1,30 @@
 // src/pages/adminPage/createUserPage.jsx
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Button, Form, Spinner } from "react-bootstrap";
-import AdminPageBackground from "./adminPageBackground";
-import SidenavCustom from "./sideNav";
-import CustomNavbar from "./topNav";
-import { Row, Col } from "rsuite";
-import { Register } from "../../api/apiAuth";
+import AdminPageBackground from "../adminPageBackground";
 import { useNavigate } from "react-router-dom";
-import { AddLayanan } from "../../api/apiLayanan";
 import { toast } from "react-toastify";
+import { AddItem } from "../../../api/apiItem";
 
-const CreateLayanan = () => {
+const CreateItem = () => {
   const [isPending, setIsPending] = useState(false);
-  const [isSidenavExpanded, setSidenavExpanded] = useState(true);
-  const logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-    navigate("/");
-  };
   const navigate = useNavigate();
   const [data, setData] = useState({
-    nama_layanan: "",
-    durasi: "",
+    nama_item: "",
     harga: "",
-    note: "",
+    deskripsi: "",
   });
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
-  const tambahLayanan = (event) => {
+  const tambahItem = (event) => {
     setIsPending(true);
     event.preventDefault();
-    AddLayanan(data)
+    AddItem(data)
       .then((res) => {
         toast.success(res.message);
         setIsPending(false);
-        navigate("/admin/showDataLayanan");
+        navigate("/admin/showDataItem");
       })
       .catch((err) => {
         console.log(err);
@@ -49,7 +36,7 @@ const CreateLayanan = () => {
       <div className="row d-flex">
         <div className="col">
           <div className="container-fluid px-4 py-2">
-            <Form onSubmit={tambahLayanan}>
+            <Form onSubmit={tambahItem}>
               <div
                 className="container px-4 py-3 my-4 rounded"
                 style={{
@@ -58,29 +45,16 @@ const CreateLayanan = () => {
                   borderRadius: "10px",
                 }}
               >
-                <h1>Create Layanan</h1>
+                <h1>Create Item</h1>
                 <div className="row mb-2">
                   <div className="col-md-12">
-                    <label className="d-flex">Nama Layanan</label>
+                    <label className="d-flex">Nama Item</label>
                     <input
                       type="text"
-                      label="Nama_layanan"
-                      name="nama_layanan"
+                      label="Nama Item"
+                      name="nama_item"
                       onChange={handleChange}
-                      placeholder="Masukkan Nama Layanan"
-                      className="form-control"
-                    />
-                  </div>
-                </div>
-                <div className="row mb-2">
-                  <div className="col-md-12">
-                    <label className="d-flex">Durasi</label>
-                    <input
-                      type="number"
-                      label="Durasi"
-                      name="durasi"
-                      onChange={handleChange}
-                      placeholder="Masukkan Durasi"
+                      placeholder="Masukkan Nama Item"
                       className="form-control"
                     />
                   </div>
@@ -100,13 +74,13 @@ const CreateLayanan = () => {
                 </div>
                 <div className="row mb-2">
                   <div className="col-md-12">
-                    <label className="d-flex">Note</label>
+                    <label className="d-flex">Deskripsi</label>
                     <input
                       type="text"
-                      label="Note"
-                      name="note"
+                      label="Deskripsi"
+                      name="deskripsi"
                       onChange={handleChange}
-                      placeholder="Masukkan Note"
+                      placeholder="Masukkan Deskripsi"
                       className="form-control"
                     />
                   </div>
@@ -141,4 +115,4 @@ const CreateLayanan = () => {
   );
 };
 
-export default CreateLayanan;
+export default CreateItem;
