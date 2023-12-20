@@ -61,3 +61,18 @@ export const Deposit = async (data) => {
     throw error.response.data;
   }
 };
+
+// Melakukan pembayaran
+export const Pembayaran = async (data) => {
+  try {
+    const response = await useAxios.post("/pembayaran", data, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    });
+    return response.data.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
