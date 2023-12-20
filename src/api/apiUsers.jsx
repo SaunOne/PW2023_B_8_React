@@ -64,6 +64,21 @@ export const UpdateProfile = async (data) => {
     throw error.response.data;
   }
 };
+
+export const UpdateUser = async (data) => {
+  console.log(data);
+  try {
+    const response = await useAxios.post(`/usersUpdate/${data.id}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data", // untuk upload thumbnail
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
 // Menghaspu content
 export const DeleteUser = async (id) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));

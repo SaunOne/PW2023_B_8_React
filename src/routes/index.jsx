@@ -16,6 +16,7 @@ import About from "../pages/greeting/AboutPage";
 import AdminLayout from "../layouts/AdminLayout";
 import Admin from "../pages/admin/AdminPage";
 import TampilImage from "../components/modals/tampilImage";
+import Footer from "../components/footer";
 const router = createBrowserRouter([
   {
     path: "*",
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
   },
 
   {
+
     children: [
       {
         path: "/",
@@ -30,6 +32,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <DashboardPage />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -47,6 +50,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <About />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -56,6 +60,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <OurTeam />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -119,7 +124,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-35;
 const AppRouter = () => {
   return (
     <>

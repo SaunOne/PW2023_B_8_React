@@ -17,6 +17,26 @@ import {
   Stack,
   Button,
 } from "react-bootstrap";
+
+//modal payment
+const PaymentModal = ({ isOpen, onClose, paymentInfo }) => {
+  return (
+    <div className={`modal ${isOpen ? 'is-active' : ''}`}>
+      <div className="modal-background" onClick={onClose}></div>
+      <div className="modal-content">
+        <div className="box">
+          <h2 className="title is-4">Informasi Pembayaran</h2>
+          <p>{paymentInfo}</p>
+        </div>
+      </div>
+      <button
+        className="modal-close is-large"
+        aria-label="close"
+        onClick={onClose}
+      ></button>
+    </div>
+  );
+};
 // import './YourComponent.css'; // Ganti dengan path file CSS yang sesuai
 
 const History = () => {
@@ -26,6 +46,8 @@ const History = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [historySearch, setHistorySearch] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
+  
+
 
   const toggleActive = (navId) => {
     sorting(navId);
@@ -54,6 +76,8 @@ const History = () => {
       setCodeSort("Done");
     }
   };
+
+  
 
   const search = (event) => {
     setIsLoading(true);
@@ -93,13 +117,14 @@ const History = () => {
       console.log(`nama index${index} ${item.harga}`);
     });
     setIsLoading(false);
-    // Lakukan sesuatu dengan data hasil pencarian
+ 
   };
 
   useEffect(() => {
-    // Di sini, Anda dapat melakukan sesuatu setelah perubahan historySearch
+    
     History();
-  }, []); // Pastikan untuk menambahkan historySearch ke dalam dependensi useEffect jika diperlukan
+  }, []);
+  
 
   return (
     <>

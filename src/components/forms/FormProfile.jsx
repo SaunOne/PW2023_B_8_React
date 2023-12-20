@@ -94,6 +94,7 @@ const FormProfile = () => {
                   style={{width: '80%', aspectRatio: "1/1"}}
                   alt="Profile Image"
                 />
+                
               ) : (
                 <FontAwesomeIcon
                   className="mt-2"

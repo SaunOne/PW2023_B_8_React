@@ -1,14 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Form,
-  Container,
-  Spinner,
-  Button,
-  Modal
-} from "react-bootstrap";
-import { Steps } from 'rsuite';
+import { toast } from "react-toastify";
+import { Form, Container, Spinner, Button, Modal } from "react-bootstrap";
+import { Steps } from "rsuite";
 import "./PilihLayanan.css";
 import { GetAllItems } from "../../api/apiItem";
 import { GetAllJenisPengambilan } from "../../api/apiJenisPengambilan";
@@ -33,9 +28,10 @@ const Order = () => {
   });
 
   const handleModalClose = () => {
-    handleBerikutnyaClick();
     setShowModal(false);
-    navigate('/user/payment');
+    handleBerikutnyaClick();
+    navigate("/user/payment");
+    toast.success("Berhasil Membuat Orderan");
   };
 
   useEffect(() => {
@@ -85,35 +81,39 @@ const Order = () => {
   const handleInputChange = (event) => {
     const { id, value } = event.target;
 
-    if (id === 'durasi') {
-      console.log('Selected Durasi:', value);
+    if (id === "durasi") {
+      console.log("Selected Durasi:", value);
       setOrder({ ...order, id_layanan: value });
-    } else if (id === 'pengambilan') {
-      console.log('Selected Pengambilan:', value);
+    } else if (id === "pengambilan") {
+      console.log("Selected Pengambilan:", value);
       setOrder({ ...order, id_jenis_pengambilan: value });
     } else {
       setOrder({ ...order, [id]: value });
     }
-  }
+  };
 
   const submitData = async (event) => {
-    event.preventDefault();
-    setIsPending(true);
-    const formData = new FormData();
-    formData.append("id_layanan", order.id_layanan);
-    formData.append("id_jenis_pengambilan", order.id_jenis_pengambilan);
-    formData.append("berat", order.berat);
+   
+      console.log('jhaijo');
+      event.preventDefault();
+      setIsPending(true);
+      const formData = new FormData();
+      formData.append("id_layanan", order.id_layanan);
+      formData.append("id_jenis_pengambilan", order.id_jenis_pengambilan);
+      formData.append("berat", order.berat);
 
-    await OrderTransaksiLaundry(formData).then((value) => {
-      setIdCreatedTransaksi(value.id_transaksi_laundry);
-      sessionStorage.setItem("id_transaksi", value.id_transaksi_laundry);
-      setIsPending(false);
-      console.log(`id_transaksi_laundry: ${value.id_transaksi_laundry}`);
-    });
+      await OrderTransaksiLaundry(formData).then((value) => {
+        setIdCreatedTransaksi(value.id_transaksi_laundry);
+        sessionStorage.setItem("id_transaksi", value.id_transaksi_laundry);
+        setIsPending(false);
+        console.log(`id_transaksi_laundry: ${value.id_transaksi_laundry}`);
+      });
 
-    setShowModal(true);
+      setShowModal(true);
+    
+
     // handleDelay();
-  }
+  };
 
   const handleBerikutnyaClick = async () => {
     const selectedItemsData = Object.keys(showJumlahLayanan)
@@ -131,8 +131,10 @@ const Order = () => {
         id_item: selectedItemsData[i].itemId,
         jumlah: selectedItemsData[i].quantity,
       };
-      const createdTransaksiTambahan = await TambahItemTransaksiTambahan(transaksiTambahanData);
-      console.log('Transaksi tambahan created:', createdTransaksiTambahan);
+      const createdTransaksiTambahan = await TambahItemTransaksiTambahan(
+        transaksiTambahanData
+      );
+      console.log("Transaksi tambahan created:", createdTransaksiTambahan);
     }
   };
 
@@ -154,7 +156,9 @@ const Order = () => {
       </div>
       <Container className="cont cont-input mt-5">
         <div style={{ textAlign: "center" }}>
-          <h3 style={{ color: "#014E87" }}><strong>Pilih Layanan</strong></h3>
+          <h3 style={{ color: "#014E87" }}>
+            <strong>Pilih Layanan</strong>
+          </h3>
         </div>
         <Form onSubmit={submitData}>
           {/* <div className="form-floating mt-3">
@@ -163,29 +167,61 @@ const Order = () => {
           </div> */}
           <div className="row mt-5">
             <div className="col-6 cont-input-layanan">
-              <select className="form-select" id="durasi" onChange={handleInputChange} required>
-                <option selected disabled value="">Pilih Durasi</option>
+              <select
+                className="form-select"
+                id="durasi"
+                onChange={handleInputChange}
+                required
+              >
+                <option selected disabled value="">
+                  Pilih Durasi
+                </option>
                 {layanan.map((layanan) => (
-                  <option key={layanan.id_layanan} value={layanan.id_layanan}>{layanan.nama_layanan}</option>
+                  <option key={layanan.id_layanan} value={layanan.id_layanan}>
+                    {layanan.nama_layanan}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="col-6">
-              <select className="form-select" id="pengambilan" onChange={handleInputChange} required>
-                <option selected disabled value="">Pilih Pengambilan</option>
+              <select
+                className="form-select"
+                id="pengambilan"
+                onChange={handleInputChange}
+                required
+              >
+                <option selected disabled value="">
+                  Pilih Pengambilan
+                </option>
                 {jenisPengambilan.map((jenis) => (
-                  <option key={jenis.id_jenis_pengambilan} value={jenis.id_jenis_pengambilan}>{jenis.nama_jenis_pengambilan}</option>
+                  <option
+                    key={jenis.id_jenis_pengambilan}
+                    value={jenis.id_jenis_pengambilan}
+                  >
+                    {jenis.nama_jenis_pengambilan}
+                  </option>
                 ))}
               </select>
             </div>
           </div>
           <div className="row mt-3">
             <div className="col-6">
-              <label className="d-flex mb-2" htmlFor="berat"><strong>Berat Laundry (Kg)</strong></label>
-              <input type="number" className="form-control" id="berat" placeholder="Masukkan berat laundry" onChange={handleInputChange} required />
+              <label className="d-flex mb-2" htmlFor="berat">
+                <strong>Berat Laundry (Kg)</strong>
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                id="berat"
+                placeholder="Masukkan berat laundry"
+                onChange={handleInputChange}
+                required
+              />
             </div>
             <div className="col-6">
-              <p className="d-flex"><strong>Pilih Layanan Lainnya:</strong></p>
+              <p className="d-flex">
+                <strong>Pilih Layanan Lainnya:</strong>
+              </p>
               {items.map((item) => (
                 <div className="row mb-2" key={item.id_item}>
                   <div className="col-4">
@@ -195,9 +231,17 @@ const Order = () => {
                         type="checkbox"
                         value={item.nama_item}
                         id={`item_${item.id_item}`}
-                        onChange={(e) => handleLayananCheckboxChange(item.id_item, e.target.checked)}
+                        onChange={(e) =>
+                          handleLayananCheckboxChange(
+                            item.id_item,
+                            e.target.checked
+                          )
+                        }
                       />
-                      <label className="form-check-label d-flex" htmlFor={`item_${item.id_item}`}>
+                      <label
+                        className="form-check-label d-flex"
+                        htmlFor={`item_${item.id_item}`}
+                      >
                         {item.nama_item}
                       </label>
                     </div>
@@ -209,7 +253,7 @@ const Order = () => {
                         type="number"
                         placeholder="Masukkan Jumlah"
                         id={`layananJumlah_${item.id_item}`}
-                      // onChange={handleInputChange}
+                        // onChange={handleInputChange}
                       />
                     </div>
                   )}
@@ -218,7 +262,9 @@ const Order = () => {
             </div>
           </div>
           <div className="mt-4 d-flex justify-content-end">
-            <a href="" type="button" className="btn btn-back">Kembali</a>
+            <a href="" type="button" className="btn btn-back">
+              Kembali
+            </a>
             <Button type="submit" className="btn btn-next" disabled={isPending}>
               {isPending ? (
                 <>
@@ -255,11 +301,13 @@ const Order = () => {
         <Modal.Header closeButton>
           <Modal.Title>Modal Success</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Berhasil Menambahkan Data Order
-        </Modal.Body>
+        <Modal.Body>Berhasil Menambahkan Data Order</Modal.Body>
         <Modal.Footer>
-          <Button className="btn-modal" variant="success" onClick={handleModalClose}>
+          <Button
+            className="btn-modal"
+            variant="success"
+            onClick={handleModalClose}
+          >
             Close
           </Button>
         </Modal.Footer>
