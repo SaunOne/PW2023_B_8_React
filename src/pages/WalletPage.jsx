@@ -11,7 +11,7 @@ import { auto } from "@popperjs/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import "./css/Wallet.css";
-import { GetUserById, UpdateProfile } from "../api/apiUsers";
+import { GetUserById } from "../api/apiUsers";
 import { GetDepositByUserId, Deposit } from "../api/apiDeposit";
 
 const Wallet = () => {
@@ -49,15 +49,10 @@ const Wallet = () => {
 
   const handleTopUpClick = async () => {
     try {
-      const updatedUser = { ...user, saldo: user.saldo + parseFloat(amount) };
-      await UpdateProfile(updatedUser);
 
       const newDeposit = {
-        user_id: user.id_user,
         metode_pembayaran: document.getElementById("pilihLayanan").value,
-        jumlah_deposit: parseFloat(amount),
-        tipe: "Isi Saldo",
-        tanggal_deposit: new Date().toISOString(),
+        jumlah: parseFloat(amount),
       };
       await Deposit(newDeposit);
 
@@ -66,9 +61,8 @@ const Wallet = () => {
 
       setUser(refreshedUser);
       setDeposit(refreshedDeposit);
-      setAmount("");
       setShowModal(true);
-
+      setAmount("");
     } catch (error) {
       console.log(error);
     }
@@ -94,7 +88,7 @@ const Wallet = () => {
         <div className="col-7">
           <Container className="cont">
             <h4 className="d-flex">Your Wallet</h4>
-            <h2 className="d-flex mt-2" style={{color: "#014E87"}}><FontAwesomeIcon icon={faWallet} /><strong>IDR {user.saldo}.00</strong></h2>
+            <h2 className="d-flex mt-2" style={{ color: "#014E87" }}><FontAwesomeIcon icon={faWallet} /><strong>IDR {user.saldo}.00</strong></h2>
             <Form className="mt-2">
               <label htmlFor="jumlahUang" className="d-flex"><strong>Jumlah Uang</strong></label>
               {/* <input type="number" className="form-control mt-2" id="jumlahUang" name="jumlahUang" placeholder="Masukkan Jumlah Uang" /> */}
@@ -114,7 +108,7 @@ const Wallet = () => {
                 <option value="Bank Transfer">Bank Transfer</option>
                 <option value="E-Money">E-Money</option>
               </select>
-              <Button className="mt-4 d-flex btn-topUp" onClick={handleTopUpClick}>
+              <Button className="mt-4 btn-topUp d-flex" onClick={handleTopUpClick}>
                 Isi Saldo
               </Button>
             </Form>
@@ -125,7 +119,7 @@ const Wallet = () => {
             <h5 className="mt-3 d-flex"><strong>Riwayat Transaksi</strong></h5>
             <div className="row">
               <div className="col-12 mt-3">
-                <div className="table-responsive" style={{ overflow: auto }}>
+                <div className="table-responsive" style={{ maxHeight: "300px", overflowY: auto }}>
                   <table className="table table-info" style={{ minWidth: 100 }}>
                     <thead>
                       <tr className="header-row" style={{ backgroundColor: "#014E87" }}>
@@ -138,12 +132,14 @@ const Wallet = () => {
                     </thead>
                     <tbody>
                       {deposit.map((depositItem) => (
-                        <tr key={depositItem.id_deposit}>
-                          <th>{depositItem.id_deposit}</th>
+                        <tr key={depositItem.id_transaksi_wallet}>
+                          <th>{depositItem.id_transaksi_wallet}</th>
                           <td>{depositItem.metode_pembayaran}</td>
-                          <td style={{ color: "green" }}>+IDR {depositItem.jumlah_deposit}</td>
-                          <td>Isi Saldo</td>
-                          <td>{depositItem.tanggal_deposit}</td>
+                          <td style={{ color: depositItem.type_transaksi === "Deposit" ? "green" : "red" }}>
+                            {depositItem.type_transaksi === "Deposit" ? `+IDR ${depositItem.jumlah}` : `-IDR ${depositItem.jumlah}`}
+                          </td>
+                          <td>{depositItem.type_transaksi}</td>
+                          <td>{depositItem.tanggal}</td>
                         </tr>
                       ))}
                     </tbody>
