@@ -48,9 +48,9 @@ export const AddJenisPengambilan = async (data) => {
 };
 
 // Mengupdate jenis pengambilan berdasarkan ID
-export const UpdateJenisPengambilan = async (id, data) => {
+export const UpdateJenisPengambilan = async (data) => {
   try {
-    const response = await useAxios.put(`/jenisPengambilan/${id}`, data, {
+    const response = await useAxios.put(`/jenisPengambilan/${data.id_jenis_pengambilan}`, data, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${sessionStorage.getItem("token")}`,

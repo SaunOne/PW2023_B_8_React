@@ -78,15 +78,11 @@ const TopNavbar = ({ routes }) => {
                 Create Item
               </NavDropdown.Item>
             </NavDropdown>
-            <NavDropdown
-              className="mx-3"
-              title="Jenis Pengambilan"
-              id="basic-nav-dropdown"
-            >
-              <NavDropdown.Item onClick={() => navigate("/admin/showDataUser")}>
+            <NavDropdown className="mx-3" title="Jenis Pengambilan" id="basic-nav-dropdown">
+              <NavDropdown.Item onClick={() => navigate("/admin/showDataJenisPengambilan")}>
                 Show Jenis Pengambilan
               </NavDropdown.Item>
-              <NavDropdown.Item onClick={() => navigate("/admin/createUser")}>
+              <NavDropdown.Item onClick={() => navigate("/admin/createDataJenisPengambilan")}>
                 Create Jenis Pengambilan
               </NavDropdown.Item>
             </NavDropdown>

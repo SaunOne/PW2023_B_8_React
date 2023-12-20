@@ -25,6 +25,8 @@ import AdminUpdateUser from "../pages/admin/updateUserPage";
 import AdminShowLayanan from "../pages/admin/showDataLayananPage";
 import AdminUpdateLayanan from "../pages/admin/updateLayananPage";
 import AdminSideNav from "../pages/admin/sideNav";
+import ShowDataJenisPengambilan from "../pages/admin/jenis_pengambilan/ShowJenisPengambilan";
+import CreateJenisPengambilanPage from "../pages/admin/jenis_pengambilan/CreateJenisPengambilan";
 import CreateLayanan from "../pages/admin/createLayananPage";
 import CreateItem from "../pages/admin/createItemPage";
 import ShowDataItem from "../pages/admin/showDataItemPage";
@@ -143,6 +145,12 @@ const router = createBrowserRouter([
         element: <AdminUpdateUser />,
       },
       {
+        path: "/admin/showDataJenisPengambilan",
+        element: <ShowDataJenisPengambilan />,
+      },
+      {
+        path: "/admin/createDataJenisPengambilan",
+        element: <CreateJenisPengambilanPage />,
         path: "/admin/showDataLayanan",
         element: <AdminShowLayanan />,
       },
