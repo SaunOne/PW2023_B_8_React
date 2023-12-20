@@ -119,7 +119,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-35;
 const AppRouter = () => {
   return (
     <>
