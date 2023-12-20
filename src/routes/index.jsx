@@ -15,6 +15,7 @@ import OurTeam from "../pages/greeting/OurTeamPage";
 import About from "../pages/greeting/AboutPage";
 import AdminLayout from "../layouts/AdminLayout";
 import Admin from "../pages/admin/AdminPage";
+import TampilImage from "../components/modals/tampilImage";
 const router = createBrowserRouter([
   {
     path: "*",
@@ -93,7 +94,10 @@ const router = createBrowserRouter([
         path: "/user/history",
         element: <History />,
       },
-      
+      {
+        path: "/user/test",
+        element: <tampilImage/>
+      }
     ],
   },
   {

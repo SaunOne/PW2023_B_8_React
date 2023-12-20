@@ -1,10 +1,5 @@
 import "./modal.css";
-import {
-
-  Spinner,
-
-  Button,
-} from "react-bootstrap";
+import { Spinner, Button } from "react-bootstrap";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import imgProfile from "../../assets/images/profile.png";
@@ -19,19 +14,18 @@ const ProfileModal = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(Object);
   const [isLoading, setIsLoading] = useState(false);
-  const [image,setImage] = useState(null);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
-    console.log(`isLoading ${sessionStorage.getItem('user')}`);
-    
-    var temp =  sessionStorage.getItem('user');
+    console.log(`isLoading ${sessionStorage.getItem("user")}`);
+
+    var temp = sessionStorage.getItem("user");
     setUser(JSON.parse(temp));
     GetUserByLogin().then((value) => {
       setImage(getImage(value.image_profile));
-   })
+    });
     setIsLoading(false);
-    
   }, []);
 
   const logout = () => {
@@ -40,8 +34,7 @@ const ProfileModal = () => {
     navigate("/login");
   };
   const test = () => {
-    
-    console.log(`ini : ${image}`)
+    console.log(`ini : ${image}`);
     console.log(`sudah : ${user.fullname}`);
   };
 
@@ -64,20 +57,19 @@ const ProfileModal = () => {
               ) : (
                 <div className="row modal-profile">
                   <div
-                    className="col-3 d-flex align-items-center "
+                    className=" col-3 d-flex align-items-center "
                     style={{ height: "80px" }}
                   >
-                    {image? (
+                    {image ? (
                       <img
-                      src={URL.createObjectURL(image)}
-                      alt="Thumbnail"
-                      className="w-100 h-100 object-fit-cover"
-                    />
+                        src={image}
+                        alt="Thumbnail"
+                        className="rounded-circle img-profile"
+                        style={{ width: "130%", aspectRatio: "1/1" }}
+                      />
                     ) : (
                       <FontAwesomeIcon icon={faUser} size="2x" />
                     )}
-                   
-
                   </div>
                   <div
                     className="col d-flex flex-column justify-content-center align-items-start"

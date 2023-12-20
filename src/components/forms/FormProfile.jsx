@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Button, Alert, Spinner, Form } from "react-bootstrap";
 import { useState } from "react";
-import { GetUserById, UpdateProfile } from "../../api/apiUsers";
+import { GetUserById, GetUserByLogin, UpdateProfile } from "../../api/apiUsers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackward, faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FaImage, FaPlusSquare } from "react-icons/fa";
@@ -50,8 +50,11 @@ const FormProfile = () => {
       console.log(`isi image ${pushImage}`);
       editedUser.image_profile = pushImage;
       await UpdateProfile(editedUser);
-
+        
       setUser({ ...editedUser });
+      GetUserByLogin().then((value) => {
+        setImage(getImage(value.image_profile));
+      });
       setEditMode(false);
     } catch (error) {
       console.log(error);
@@ -86,28 +89,34 @@ const FormProfile = () => {
             <div className="pt-4 img-preview text-center position-relative mb-3">
               {image ? (
                 <img
-                  src={{}}
-                  className="rounded-circle img-profile"
+                  src={image}
+                  className="rounded-circle img-profile "
+                  style={{width: '80%', aspectRatio: "1/1"}}
                   alt="Profile Image"
                 />
               ) : (
                 <FontAwesomeIcon
                   className="mt-2"
-                  onClick={() => document.getElementById("pushImage").click()}
                   icon={faUser}
                   size="6x"
                 />
               )}
-              <Button
+              {isEditMode? (
+                <Button
                 variant="primary"
                 type="button"
                 disabled={isPending}
                 size="sm"
                 className="mt-3"
                 onClick={() => document.getElementById("pushImage").click()}
-              >
-                Edit Photo
-              </Button>
+              >    Edit Photo
+                </Button>
+              ):(
+                null
+              )}
+              
+            
+              
 
               <input
                 type="file"
@@ -233,11 +242,7 @@ const FormProfile = () => {
           />
         </div>
       </div>
-      <img
-        src={URL.createObjectURL(image)}
-        className="rounded-circle img-profile"
-        alt="Profile Image"
-      />
+   
     </Form>
   );
 };
