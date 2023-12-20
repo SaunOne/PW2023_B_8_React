@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { DeleteUser, GetAllUser } from "../../api/apiUsers";
 import { Link } from "react-router-dom";
 import "./css/ShowDataUser.css";
-import UpdateUser from "./updateUserPage";
+import UpdateUserAccount from "./updateUserPage";
 
 const ShowDataUser = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -117,7 +117,7 @@ const ShowDataUser = () => {
                         <td>{user.alamat}</td>
                         <td>{user.no_telp}</td>
                         <td>
-                          <UpdateUser user={user} onClose={showUser} />
+                          <UpdateUserAccount user={user} onClose={showUser} />
                         </td>
                         <td className="delete-col">
                           {isPending ? (

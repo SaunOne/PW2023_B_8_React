@@ -4,10 +4,10 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import AdminPageBackground from "../admin/adminPageBackground";
 import SidenavCustom from "../admin/sideNav";
 import { Button, Form, Modal } from "react-bootstrap";
-import { UpdateProfile } from "../../api/apiUsers";
+import { UpdateUser } from "../../api/apiUsers";
 import { toast } from "react-toastify";
 
-const UpdateUser = ({ user, onClose }) => {
+const UpdateUserAccount = ({ user, onClose }) => {
   const [show, setShow] = useState(false);
   const [data, setData] = useState(user);
   const [isPending, setIsPending] = useState(false);
@@ -24,7 +24,6 @@ const UpdateUser = ({ user, onClose }) => {
   const handleShow = () => {
     setShow(true);
     console.log("tes: ", data);
-    handleChange(event);
   }
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -32,7 +31,9 @@ const UpdateUser = ({ user, onClose }) => {
   const submitData = (event) => {
     event.preventDefault();
     setIsPending(true);
-    UpdateProfile(data)
+    console.log("tes: ", data);
+    console.log("tes id: ", data.id_user);
+    UpdateUser(data)
       .then((response) => {
         setIsPending(false);
         toast.success(response.message);
@@ -159,4 +160,4 @@ const UpdateUser = ({ user, onClose }) => {
   );
 };
 
-export default UpdateUser;
+export default UpdateUserAccount;

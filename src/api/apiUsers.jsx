@@ -82,7 +82,7 @@ export const DeleteUser = async (id) => {
 export const UpdateUser = async (data) => {
   console.log(data);
   try {
-    const response = await useAxios.post(`/usersUpdate/${data.id}`, data, {
+    const response = await useAxios.post(`/usersUpdate/${data.id_user}`, data, {
       headers: {
         "Content-Type": "multipart/form-data", // untuk upload thumbnail
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
