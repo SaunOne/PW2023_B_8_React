@@ -203,12 +203,7 @@ const History = () => {
                           <div className="col-6 mt-3" key={index}>
                             <div className="row card_body">
                               <div className="mb-1 p-5 p-md-2 col-xxl-5 col-xl-6 col-md-4 col card_img-body">
-                                {activeNav === 1 ? (
-                                  <Lottie
-                                    loop={true}
-                                    animationData={pending}
-                                  ></Lottie>
-                                ) : activeNav === 2 ? (
+                                {item.status_pengerjaan === "Proses" ? (
                                   <Lottie animationData={proses}></Lottie>
                                 ) : (
                                   <Lottie animationData={done}></Lottie>
@@ -328,12 +323,7 @@ const History = () => {
                       <div className="col-6 mt-3" key={index}>
                         <div className="row card_body">
                           <div className="mb-1 p-5 p-md-2 col-xxl-5 col-xl-6 col-md-4 col card_img-body">
-                            {activeNav === 1 ? (
-                              <Lottie
-                                loop={true}
-                                animationData={pending}
-                              ></Lottie>
-                            ) : activeNav === 2 ? (
+                            {item.status_pengerjaan === "Proses" ? (
                               <Lottie animationData={proses}></Lottie>
                             ) : (
                               <Lottie animationData={done}></Lottie>
