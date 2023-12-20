@@ -8,13 +8,17 @@ import Profile from "../pages/ProfilePage";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Wallet from "../pages/WalletPage";
 import TopNavbar from "../components/TopNavbar";
-import Payment from "../pages/TransaksiLaundry/PaymentPage";
-import Order from "../pages/TransaksiLaundry/OrderPage";
+import Payment from "../pages/transaksiLaundry/PaymentPage";
+import Order from "../pages/transaksiLaundry/OrderPage";
 import History from "../pages/HistoryPage";
 import OurTeam from "../pages/greeting/OurTeamPage";
 import About from "../pages/greeting/AboutPage";
 import AdminLayout from "../layouts/AdminLayout";
 import Admin from "../pages/admin/AdminPage";
+
+import TampilImage from "../components/modals/tampilImage";
+import Footer from "../components/footer";
+
 import AdminShowUser from "../pages/admin/showDataUser";
 import AdminCreateUser from "../pages/admin/createUserPage";
 import AdminUpdateUser from "../pages/admin/updateUserPage";
@@ -27,6 +31,7 @@ const router = createBrowserRouter([
   },
 
   {
+
     children: [
       {
         path: "/",
@@ -34,6 +39,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <DashboardPage />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -51,6 +57,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <About />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -60,6 +67,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <OurTeam />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -98,7 +106,10 @@ const router = createBrowserRouter([
         path: "/user/history",
         element: <History />,
       },
-      
+      {
+        path: "/user/test",
+        element: <tampilImage/>
+      }
     ],
   },
   {
@@ -128,7 +139,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-35;
 const AppRouter = () => {
   return (
     <>

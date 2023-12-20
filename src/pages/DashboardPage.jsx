@@ -81,7 +81,7 @@ const DashboardPage = () => {
 
                 {isLogin ? (
                   <a href="/user/order" className="button">
-                    <Button variant="danger" className="btn-get-started">
+                    <Button variant="danger" className="btn-get-started mt-4" style={{width: '120px'}}>
                       Order
                     </Button>
                   </a>
