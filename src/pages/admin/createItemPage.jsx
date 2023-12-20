@@ -3,14 +3,17 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Button, Form, Spinner } from "react-bootstrap";
-import AdminPageBackground from "../admin/adminPageBackground";
-import SidenavCustom from "../admin/sideNav";
-import CustomNavbar from "../admin/topNav";
+import AdminPageBackground from "./adminPageBackground";
+import SidenavCustom from "./sideNav";
+import CustomNavbar from "./topNav";
 import { Row, Col } from "rsuite";
 import { Register } from "../../api/apiAuth";
 import { useNavigate } from "react-router-dom";
+import { AddLayanan } from "../../api/apiLayanan";
+import { toast } from "react-toastify";
+import { AddItem } from "../../api/apiItem";
 
-const CreateUser = () => {
+const CreateItem = () => {
   const [isPending, setIsPending] = useState(false);
   const [isSidenavExpanded, setSidenavExpanded] = useState(true);
   const logout = () => {
@@ -20,23 +23,21 @@ const CreateUser = () => {
   };
   const navigate = useNavigate();
   const [data, setData] = useState({
-    fullname: "",
-    username: "",
-    email: "",
-    password: "",
-    alamat: "",
+    nama_item: "",
+    harga: "",
+    deskripsi: "",
   });
   const handleChange = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
-  const register = (event) => {
+  const tambahItem = (event) => {
     setIsPending(true);
     event.preventDefault();
-    Register(data)
+    AddItem(data)
       .then((res) => {
         toast.success(res.message);
         setIsPending(false);
-        navigate("/admin/showDataUser");
+        navigate("/admin/showDataItem");
       })
       .catch((err) => {
         console.log(err);
@@ -48,7 +49,7 @@ const CreateUser = () => {
       <div className="row d-flex">
         <div className="col">
           <div className="container-fluid px-4 py-2">
-            <Form onSubmit={register}>
+            <Form onSubmit={tambahItem}>
               <div
                 className="container px-4 py-3 my-4 rounded"
                 style={{
@@ -57,68 +58,42 @@ const CreateUser = () => {
                   borderRadius: "10px",
                 }}
               >
-                <h1>Create User</h1>
+                <h1>Create Item</h1>
                 <div className="row mb-2">
                   <div className="col-md-12">
-                    <label className="d-flex">Nama Lengkap</label>
+                    <label className="d-flex">Nama Item</label>
                     <input
                       type="text"
-                      label="Fullname"
-                      name="fullname"
+                      label="Nama Item"
+                      name="nama_item"
                       onChange={handleChange}
-                      placeholder="Masukkan Nama"
+                      placeholder="Masukkan Nama Item"
                       className="form-control"
                     />
                   </div>
                 </div>
                 <div className="row mb-2">
                   <div className="col-md-12">
-                    <label className="d-flex">Username</label>
+                    <label className="d-flex">Harga</label>
+                    <input
+                      type="number"
+                      label="Harga"
+                      name="harga"
+                      onChange={handleChange}
+                      placeholder="Masukkan Harga"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+                <div className="row mb-2">
+                  <div className="col-md-12">
+                    <label className="d-flex">Deskripsi</label>
                     <input
                       type="text"
-                      label="Username"
-                      name="username"
+                      label="Deskripsi"
+                      name="deskripsi"
                       onChange={handleChange}
-                      placeholder="Masukkan Username"
-                      className="form-control"
-                    />
-                  </div>
-                </div>
-                <div className="row mb-2">
-                  <div className="col-md-12">
-                    <label className="d-flex">Email</label>
-                    <input
-                      type="email"
-                      label="Email"
-                      name="email"
-                      onChange={handleChange}
-                      placeholder="Masukkan Email"
-                      className="form-control"
-                    />
-                  </div>
-                </div>
-                <div className="row mb-2">
-                  <div className="col-md-12">
-                    <label className="d-flex">Password</label>
-                    <input
-                      type="password"
-                      label="Password"
-                      name="password"
-                      onChange={handleChange}
-                      placeholder="Masukkan Password"
-                      className="form-control"
-                    />
-                  </div>
-                </div>
-                <div className="row mb-2">
-                  <div className="col-md-12">
-                    <label className="d-flex">Alamat</label>
-                    <input
-                      type="text"
-                      label="alamat"
-                      name="alamat"
-                      onChange={handleChange}
-                      placeholder="Masukkan Alamat"
+                      placeholder="Masukkan Deskripsi"
                       className="form-control"
                     />
                   </div>
@@ -153,4 +128,4 @@ const CreateUser = () => {
   );
 };
 
-export default CreateUser;
+export default CreateItem;

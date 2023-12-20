@@ -48,9 +48,9 @@ export const AddLayanan = async (data) => {
 };
 
 // Mengupdate layanan berdasarkan ID
-export const UpdateLayanan = async (id, data) => {
+export const UpdateLayanan = async (data) => {
   try {
-    const response = await useAxios.put(`/layanan/${id}`, data, {
+    const response = await useAxios.put(`/layanan/${data.id_layanan}`, data, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${sessionStorage.getItem("token")}`,

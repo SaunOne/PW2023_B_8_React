@@ -8,19 +8,29 @@ import Profile from "../pages/ProfilePage";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Wallet from "../pages/WalletPage";
 import TopNavbar from "../components/TopNavbar";
-import Payment from "../pages/TransaksiLaundry/PaymentPage";
-import Order from "../pages/TransaksiLaundry/OrderPage";
+import Payment from "../pages/transaksiLaundry/PaymentPage";
+import Order from "../pages/transaksiLaundry/OrderPage";
 import History from "../pages/HistoryPage";
 import OurTeam from "../pages/greeting/OurTeamPage";
 import About from "../pages/greeting/AboutPage";
 import AdminLayout from "../layouts/AdminLayout";
 import Admin from "../pages/admin/AdminPage";
+
+import TampilImage from "../components/modals/tampilImage";
+import Footer from "../components/footer";
+
 import AdminShowUser from "../pages/admin/showDataUser";
 import AdminCreateUser from "../pages/admin/createUserPage";
 import AdminUpdateUser from "../pages/admin/updateUserPage";
+import AdminShowLayanan from "../pages/admin/showDataLayananPage";
+import AdminUpdateLayanan from "../pages/admin/updateLayananPage";
 import AdminSideNav from "../pages/admin/sideNav";
 import ShowDataJenisPengambilan from "../pages/admin/jenis_pengambilan/ShowJenisPengambilan";
 import CreateJenisPengambilanPage from "../pages/admin/jenis_pengambilan/CreateJenisPengambilan";
+import CreateLayanan from "../pages/admin/createLayananPage";
+import CreateItem from "../pages/admin/createItemPage";
+import ShowDataItem from "../pages/admin/showDataItemPage";
+import UpdateItemLaundry from "../pages/admin/updateItemPage";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +39,7 @@ const router = createBrowserRouter([
   },
 
   {
+
     children: [
       {
         path: "/",
@@ -36,6 +47,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <DashboardPage />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -53,6 +65,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <About />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -62,6 +75,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <OurTeam />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -100,7 +114,10 @@ const router = createBrowserRouter([
         path: "/user/history",
         element: <History />,
       },
-      
+      {
+        path: "/user/test",
+        element: <tampilImage/>
+      }
     ],
   },
   {
@@ -134,11 +151,32 @@ const router = createBrowserRouter([
       {
         path: "/admin/createDataJenisPengambilan",
         element: <CreateJenisPengambilanPage />,
+        path: "/admin/showDataLayanan",
+        element: <AdminShowLayanan />,
+      },
+      {
+        path: "/admin/createLayanan",
+        element: <CreateLayanan />,
+      },
+      {
+        path: "/admin/updateLayanan",
+        element: <AdminUpdateLayanan />,
+      },
+      {
+        path: "/admin/showDataItem",
+        element: <ShowDataItem />,
+      },
+      {
+        path: "/admin/createItem",
+        element: <CreateItem />,
+      },
+      {
+        path: "/admin/updateItem ",
+        element: <UpdateItemLaundry />,
       },
     ],
   },
 ]);
-35;
 const AppRouter = () => {
   return (
     <>
