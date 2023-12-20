@@ -15,6 +15,11 @@ import OurTeam from "../pages/greeting/OurTeamPage";
 import About from "../pages/greeting/AboutPage";
 import AdminLayout from "../layouts/AdminLayout";
 import Admin from "../pages/admin/AdminPage";
+import AdminShowUser from "../pages/admin/showDataUser";
+import AdminCreateUser from "../pages/admin/createUserPage";
+import AdminUpdateUser from "../pages/admin/updateUserPage";
+import AdminSideNav from "../pages/admin/sideNav";
+
 const router = createBrowserRouter([
   {
     path: "*",
@@ -109,8 +114,16 @@ const router = createBrowserRouter([
         element: <Admin />,
       },
       {
-        path: "/admin/layanan",
-        element: <Admin />,
+        path: "/admin/showDataUser",
+        element: <AdminShowUser />,
+      },
+      {
+        path: "/admin/createUser",
+        element: <AdminCreateUser />,
+      },
+      {
+        path: "/admin/updateUser",
+        element: <AdminUpdateUser />,
       },
     ],
   },

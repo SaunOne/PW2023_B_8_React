@@ -31,9 +31,9 @@ const FormLogin = () => {
         console.log(`type pengguna :  ${data.type_pengguna}`);
         console.log(`tes: ${data}`);
         if (data.type_pengguna === "admin") {
-          navigate("/admin");
+          navigate("/admin/showDataUser");
         } else {
-          navigate("/user");
+          navigate("/admin/showDataUser");
         }
         sessionStorage.setItem("user", JSON.stringify(res.data));
         toast.success(res.message);

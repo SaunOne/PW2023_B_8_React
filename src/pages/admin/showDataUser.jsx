@@ -1,74 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import AdminPageBackground from "../adminPage/adminPageBackground";
-import SidenavCustom from "../adminPage/sideNav";
+import AdminPageBackground from "../admin/adminPageBackground";
+import SidenavCustom from "../admin/sideNav";
+import { Button, Spinner } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { DeleteUser, GetAllUser } from "../../api/apiUsers";
+import { Link } from "react-router-dom";
 import "./css/ShowDataUser.css";
+import UpdateUser from "./updateUserPage";
 
 const ShowDataUser = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [isPending, setIsPending] = useState(false);
+
+  const deleteUser = (id) => {
+    setIsPending(true);
+    // Toast.success(response);
+    DeleteUser(id)
+      .then((response) => {
+        setIsPending(false);
+        toast.success(response.message);
+        showUser();
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsPending(false);
+        toast.dark(err.message);
+      });
+  };
+  const showUser = () => {
+    setIsLoading(true);
+    GetAllUser()
+      .then((response) => {
+        setUsers(response);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  };
+  useEffect(() => {
+    showUser();
+  }, []);
   const [selectedOption, setSelectedOption] = useState("option1");
-  const [userData, setUserData] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      phone: "1234567890",
-      gender: "Male",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      phone: "9876543210",
-      gender: "Female",
-    },
-    {
-      id: 3,
-      name: "Bob Johnson",
-      email: "bob@example.com",
-      phone: "5556667777",
-      gender: "Male",
-    },
-    {
-      id: 4,
-      name: "Alice Williams",
-      email: "alice@example.com",
-      phone: "9998887777",
-      gender: "Female",
-    },
-    {
-      id: 5,
-      name: "Charlie Brown",
-      email: "charlie@example.com",
-      phone: "3332221111",
-      gender: "Male",
-    },
-  ]);
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    navigate("/");
+  };
 
   return (
     <AdminPageBackground>
       <div className="row d-flex">
-        <div style={{ maxWidth: "250px" }}>
-          <SidenavCustom />
-        </div>
         <div className="col px-0 mx-0">
           <div className="container">
-            <div className="row">
-              <div
-                className="text-end p-3 text-white"
-                style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.4)",
-                  fontFamily: "'Poppins', sans-serif",
-                  fontSize: "19px",
-                }}
-              >
-                Welcome Admin
-              </div>
-            </div>
             <h1
-              className="mt-3 mb-4"
+              className="mt-0 mb-4 py-2"
               id="accountTitle"
-              style={{ color: "white" }}
+              style={{
+                color: "white",
+                backgroundColor: "rgba(0, 0, 0, 0.4)",
+              }}
             >
               Show Data User
             </h1>
@@ -85,13 +81,13 @@ const ShowDataUser = () => {
                     />
                     <div className="input-group-append mx-2">
                       <button
-                        className="btn btn-outline-secondary py-1"
+                        className="btn btn-outline-secondary py-1 "
                         type="button"
                         id="search-addon"
                       >
                         <FontAwesomeIcon
                           icon={faSearch}
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: "pointer", marginRight: "17px" }}
                         />
                       </button>
                     </div>
@@ -106,22 +102,48 @@ const ShowDataUser = () => {
                       <th scope="col">No</th>
                       <th scope="col">Nama</th>
                       <th scope="col">Email</th>
+                      <th scope="col">Alamat</th>
                       <th scope="col">Nomor Telepon</th>
-                      <th scope="col">Jenis Kelamin</th>
                       <th scope="col">Edit</th>
                       <th scope="col">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {userData.map((user, index) => (
+                    {users.map((user, index) => (
                       <tr key={user.id}>
                         <th scope="row">{index + 1}</th>
-                        <td>{user.name}</td>
+                        <td>{user.fullname}</td>
                         <td>{user.email}</td>
-                        <td>{user.phone}</td>
-                        <td>{user.gender}</td>
-                        <td className="edit-col">Edit</td>
-                        <td className="delete-col">Delete</td>
+                        <td>{user.alamat}</td>
+                        <td>{user.no_telp}</td>
+                        <td>
+                          <UpdateUser user={user} onClose={showUser} />
+                        </td>
+                        <td className="delete-col">
+                          {isPending ? (
+                            <Button
+                              variant="danger"
+                              disabled
+                              style={{ width: "70px" }}
+                            >
+                              <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                              />
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="danger"
+                              onClick={() => deleteUser(user.id_user)}
+                              style={{ marginRight: "7px", width: "70px" }}
+                            >
+                              Hapus
+                            </Button>
+                          )}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

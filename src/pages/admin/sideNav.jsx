@@ -1,9 +1,7 @@
 import { Sidenav, Nav, Toggle } from "rsuite";
 import DashboardIcon from "@rsuite/icons/legacy/Dashboard";
 import GroupIcon from "@rsuite/icons/legacy/Group";
-import MagicIcon from "@rsuite/icons/legacy/Magic";
-import GearCircleIcon from "@rsuite/icons/legacy/GearCircle";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import React from "react";
 import './SidenavCustom.css';
 
@@ -23,13 +21,13 @@ const SidenavCustom = () => {
         <Sidenav.Body>
           <Nav activeKey={activeKey} onSelect={setActiveKey}>
             <Nav.Item eventKey="1" icon={<DashboardIcon />} className="text-start">
-              Show Data User
+              <Link to="/admin/showDataUser">Show Data User</Link>
             </Nav.Item>
             <Nav.Item eventKey="2" icon={<GroupIcon />} className="text-start">
-              Create User
+              <Link to="/admin/createUser">Create User</Link>
             </Nav.Item>
             <Nav.Item eventKey="3" icon={<GroupIcon />} className="text-start">
-              Edit User
+              <Link to="/admin/updateUser">Edit User</Link>
             </Nav.Item>
           </Nav>
         </Sidenav.Body>
