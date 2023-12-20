@@ -18,6 +18,8 @@ export const GetAllUser = async () => {
 };
 
 export const GetUserByLogin = async () => {
+  const token = sessionStorage.getItem("token");
+  console.log("token pler:",token);
   try {
     console.log(`ini tokennya : ${sessionStorage.getItem("token")}`);
      const response = await useAxios.get(`/userLogin`,{
