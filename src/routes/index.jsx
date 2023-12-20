@@ -19,6 +19,8 @@ import AdminShowUser from "../pages/admin/showDataUser";
 import AdminCreateUser from "../pages/admin/createUserPage";
 import AdminUpdateUser from "../pages/admin/updateUserPage";
 import AdminSideNav from "../pages/admin/sideNav";
+import ShowDataJenisPengambilan from "../pages/admin/jenis_pengambilan/ShowJenisPengambilan";
+import CreateJenisPengambilanPage from "../pages/admin/jenis_pengambilan/CreateJenisPengambilan";
 
 const router = createBrowserRouter([
   {
@@ -124,6 +126,14 @@ const router = createBrowserRouter([
       {
         path: "/admin/updateUser",
         element: <AdminUpdateUser />,
+      },
+      {
+        path: "/admin/showDataJenisPengambilan",
+        element: <ShowDataJenisPengambilan />,
+      },
+      {
+        path: "/admin/createDataJenisPengambilan",
+        element: <CreateJenisPengambilanPage />,
       },
     ],
   },
