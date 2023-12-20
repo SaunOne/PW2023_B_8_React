@@ -24,7 +24,7 @@ const TopNavbar = ({ routes }) => {
   };
   useEffect(() => {
     var token = sessionStorage.getItem("token");
-    console.log(`token ${token}`);
+    // console.log(`token ${token}`);
     if (token !== null) {
       setIsLogin(false);
     } else {

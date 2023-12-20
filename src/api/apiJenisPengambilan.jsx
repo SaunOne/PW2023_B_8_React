@@ -5,7 +5,7 @@ import useAxios from "."; // Sesuaikan dengan path sesuai struktur proyek Anda
 // Menampilkan semua jenis pengambilan
 export const GetAllJenisPengambilan = async () => {
   try {
-    const response = await useAxios.get("/jenisPengambilans", {
+    const response = await useAxios.get("/jenisPengambilan", {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -20,7 +20,7 @@ export const GetAllJenisPengambilan = async () => {
 // Menampilkan jenis pengambilan berdasarkan ID
 export const GetJenisPengambilanById = async (id) => {
   try {
-    const response = await useAxios.get(`/jenisPengambilans/${id}`, {
+    const response = await useAxios.get(`/jenisPengambilan/${id}`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -35,7 +35,7 @@ export const GetJenisPengambilanById = async (id) => {
 // Menambahkan jenis pengambilan baru
 export const AddJenisPengambilan = async (data) => {
   try {
-    const response = await useAxios.post("/jenisPengambilans", data, {
+    const response = await useAxios.post("/jenisPengambilan", data, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -50,7 +50,7 @@ export const AddJenisPengambilan = async (data) => {
 // Mengupdate jenis pengambilan berdasarkan ID
 export const UpdateJenisPengambilan = async (id, data) => {
   try {
-    const response = await useAxios.put(`/jenisPengambilans/${id}`, data, {
+    const response = await useAxios.put(`/jenisPengambilan/${id}`, data, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -65,7 +65,7 @@ export const UpdateJenisPengambilan = async (id, data) => {
 // Menghapus jenis pengambilan berdasarkan ID
 export const DeleteJenisPengambilan = async (id) => {
   try {
-    const response = await useAxios.delete(`/jenisPengambilans/${id}`, {
+    const response = await useAxios.delete(`/jenisPengambilan/${id}`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
