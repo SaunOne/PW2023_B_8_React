@@ -18,7 +18,13 @@ import Admin from "../pages/admin/AdminPage";
 import AdminShowUser from "../pages/admin/showDataUser";
 import AdminCreateUser from "../pages/admin/createUserPage";
 import AdminUpdateUser from "../pages/admin/updateUserPage";
+import AdminShowLayanan from "../pages/admin/showDataLayananPage";
+import AdminUpdateLayanan from "../pages/admin/updateLayananPage";
 import AdminSideNav from "../pages/admin/sideNav";
+import CreateLayanan from "../pages/admin/createLayananPage";
+import CreateItem from "../pages/admin/createItemPage";
+import ShowDataItem from "../pages/admin/showDataItemPage";
+import UpdateItemLaundry from "../pages/admin/updateItemPage";
 
 const router = createBrowserRouter([
   {
@@ -124,6 +130,30 @@ const router = createBrowserRouter([
       {
         path: "/admin/updateUser",
         element: <AdminUpdateUser />,
+      },
+      {
+        path: "/admin/showDataLayanan",
+        element: <AdminShowLayanan />,
+      },
+      {
+        path: "/admin/createLayanan",
+        element: <CreateLayanan />,
+      },
+      {
+        path: "/admin/updateLayanan",
+        element: <AdminUpdateLayanan />,
+      },
+      {
+        path: "/admin/showDataItem",
+        element: <ShowDataItem />,
+      },
+      {
+        path: "/admin/createItem",
+        element: <CreateItem />,
+      },
+      {
+        path: "/admin/updateItem ",
+        element: <UpdateItemLaundry />,
       },
     ],
   },
