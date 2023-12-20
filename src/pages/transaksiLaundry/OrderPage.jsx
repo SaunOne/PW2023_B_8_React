@@ -9,7 +9,7 @@ import {
   Modal
 } from "react-bootstrap";
 import { Steps } from 'rsuite';
-import "../css/PilihLayanan.css";
+import "./PilihLayanan.css";
 import { GetAllItems } from "../../api/apiItem";
 import { GetAllJenisPengambilan } from "../../api/apiJenisPengambilan";
 import { GetAllLayanan } from "../../api/apiLayanan";
@@ -259,7 +259,7 @@ const Order = () => {
           Berhasil Menambahkan Data Order
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleModalClose}>
+          <Button className="btn-modal" variant="success" onClick={handleModalClose}>
             Close
           </Button>
         </Modal.Footer>

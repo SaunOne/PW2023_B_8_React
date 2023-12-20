@@ -108,7 +108,7 @@ const Wallet = () => {
                 <option value="Bank Transfer">Bank Transfer</option>
                 <option value="E-Money">E-Money</option>
               </select>
-              <Button className="mt-4 d-flex btn-topUp" onClick={handleTopUpClick}>
+              <Button className="mt-4 btn-topUp d-flex" onClick={handleTopUpClick}>
                 Isi Saldo
               </Button>
             </Form>
@@ -119,7 +119,7 @@ const Wallet = () => {
             <h5 className="mt-3 d-flex"><strong>Riwayat Transaksi</strong></h5>
             <div className="row">
               <div className="col-12 mt-3">
-                <div className="table-responsive" style={{ overflow: auto }}>
+                <div className="table-responsive" style={{ maxHeight: "300px", overflowY: auto }}>
                   <table className="table table-info" style={{ minWidth: 100 }}>
                     <thead>
                       <tr className="header-row" style={{ backgroundColor: "#014E87" }}>

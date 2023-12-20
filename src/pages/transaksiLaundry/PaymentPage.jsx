@@ -11,7 +11,7 @@ import {
 import { Steps } from 'rsuite';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
-import "../css/Payment.css";
+import "./Payment.css";
 import { GetUserById } from "../../api/apiUsers";
 import { GetTransaksiLaundryById } from "../../api/apiTransaksiLaundry";
 import { GetAllJenisPengambilan } from "../../api/apiJenisPengambilan";
@@ -121,10 +121,10 @@ const Payment = () => {
             <div className="mt-4 d-flex justify-content-end">
               {/* <a href="" type="button" className="btn btn-back">Kembali</a>
               <a type="button" className="btn btn-next">Bayar</a> */}
-              <Button onClick={handlePayment}>
+              <Button className="btn-now" onClick={handlePayment}>
                 Bayar Sekarang
               </Button>
-              <Button onClick={handleBayarNanti}>
+              <Button className="btn-later" onClick={handleBayarNanti}>
                 Bayar Nanti
               </Button>
             </div>

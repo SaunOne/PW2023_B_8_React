@@ -12,7 +12,7 @@
 
 .cont-input {
     padding: 20px 20px 20px 20px;
-    max-width: 60%;
+    /* max-width: 60%; */
 }
 
 .cont-nav {
@@ -22,10 +22,15 @@
 .btn-next {
     background-color: #014E87;
     color: white;
+    max-width: fit-content;
 }
 
 .btn-back {
     color: red;
     background-color: white;
-    width: 80px;
+    max-width: fit-content;
+}
+
+.btn-modal {
+    max-width: fit-content;
 }
