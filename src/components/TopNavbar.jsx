@@ -69,7 +69,7 @@ const TopNavbar = ({ routes }) => {
                 </Nav.Link>
                 <Nav.Link eventKey={2} href="#memes">
                   <Button onClick={() => navigate("/login")} variant="danger">
-                    Get Startet
+                    Get Started
                   </Button>
                 </Nav.Link>
               </Nav>
