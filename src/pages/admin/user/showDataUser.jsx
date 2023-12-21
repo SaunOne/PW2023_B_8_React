@@ -12,6 +12,8 @@ const ShowDataUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const [isPending, setIsPending] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [originalUsers, setOriginalUsers] = useState([]);
 
   const deleteUser = (id) => {
     setIsPending(true);
@@ -28,17 +30,33 @@ const ShowDataUser = () => {
         toast.dark(err.message);
       });
   };
+
   const showUser = () => {
     setIsLoading(true);
     GetAllUser()
       .then((response) => {
         setUsers(response);
+        setOriginalUsers(response);
         setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
         setIsLoading(false);
       });
+  };
+
+  const handleSearch = () => {
+    setIsLoading(true);
+    if (searchInput === "") {
+      setUsers(originalUsers);
+    } else {
+      const filteredUsers = originalUsers.filter((user) =>
+        user.fullname.toLowerCase().includes(searchInput.toLowerCase())
+      );
+
+      setUsers(filteredUsers);
+    }
+    setIsLoading(false);
   };
   useEffect(() => {
     showUser();
@@ -69,6 +87,11 @@ const ShowDataUser = () => {
                       placeholder="Search"
                       aria-label="Search"
                       aria-describedby="search-addon"
+                      value={searchInput}
+                      onChange={(e) => {
+                        setSearchInput(e.target.value);
+                        handleSearch();
+                      }}
                     />
                     <div className="input-group-append mx-2">
                       <button

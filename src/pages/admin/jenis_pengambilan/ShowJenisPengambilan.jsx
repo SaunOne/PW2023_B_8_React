@@ -20,6 +20,8 @@ const ShowDataJenisPengambilan = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [jenisPengambilans, setJenisPengambilans] = useState([]);
   const [isPending, setIsPending] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [originalData, setOriginalData] = useState([]);
 
   const deleteJenisPengambilan = (id) => {
     setIsPending(true);
@@ -41,10 +43,12 @@ const ShowDataJenisPengambilan = () => {
     GetAllJenisPengambilan()
       .then((response) => {
         setJenisPengambilans(response);
+        setOriginalData(response);
         setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setOriginalData(response);
         setIsLoading(false);
       });
   };
@@ -57,6 +61,21 @@ const ShowDataJenisPengambilan = () => {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("user");
     navigate("/");
+  };
+
+  const handleSearch = () => {
+    setIsLoading(true);
+    if (searchInput === "") {
+      setJenisPengambilans(originalData);
+    } else {
+      const filteredData = originalData.filter((jenisPengambilan) =>
+        jenisPengambilan.nama_jenis_pengambilan
+          .toLowerCase()
+          .includes(searchInput.toLowerCase())
+      );
+      setJenisPengambilans(filteredData);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -84,6 +103,11 @@ const ShowDataJenisPengambilan = () => {
                       placeholder="Search"
                       aria-label="Search"
                       aria-describedby="search-addon"
+                      value={searchInput}
+                      onChange={(e) => {
+                        setSearchInput(e.target.value);
+                        handleSearch();
+                      }}
                     />
                     <div className="input-group-append mx-2">
                       <button
