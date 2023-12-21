@@ -15,9 +15,7 @@ export const Login = async (data) => {
 
     console.log("Token:", response.data.access_token);
     //menaruk token di stronge agar bisa digunakan di query lain yang butuh auth
-    sessionStorage.setItem("token", response.data.access_token);
-    //simpen data user yang login
-    sessionStorage.setItem("id_user", JSON.stringify(response.data.data.id_user));
+    
     
     return response.data;
   } catch (error) {

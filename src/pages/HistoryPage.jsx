@@ -16,11 +16,28 @@ import {
   Spinner,
   Stack,
   Button,
-  Modal,
 } from "react-bootstrap";
+
+//modal payment
+const PaymentModal = ({ isOpen, onClose, paymentInfo }) => {
+  return (
+    <div className={`modal ${isOpen ? 'is-active' : ''}`}>
+      <div className="modal-background" onClick={onClose}></div>
+      <div className="modal-content">
+        <div className="box">
+          <h2 className="title is-4">Informasi Pembayaran</h2>
+          <p>{paymentInfo}</p>
+        </div>
+      </div>
+      <button
+        className="modal-close is-large"
+        aria-label="close"
+        onClick={onClose}
+      ></button>
+    </div>
+  );
+};
 // import './YourComponent.css'; // Ganti dengan path file CSS yang sesuai
-import { Pembayaran } from "../api/apiDeposit";
-import { BayarTransaksiLaundry } from "../api/apiTransaksiLaundry";
 
 const History = () => {
   const [activeNav, setActiveNav] = useState(1);
@@ -29,37 +46,8 @@ const History = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [historySearch, setHistorySearch] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedTransaction(null);
-  };
-
-  const handleShowModal = (transaction) => {
-    setSelectedTransaction(transaction);
-    setShowModal(true);
-  };
-
-  const handlePayment = async () => {
-    try {
-      await BayarTransaksiLaundry(selectedTransaction.id_transaksi_laundry);
-
-      const newPembayaran = {
-        jumlah: selectedTransaction.harga,
-      };
-
-      console.log(newPembayaran);
-
-      await Pembayaran(newPembayaran);
-
-      window.location.reload();
-      handleCloseModal();
-    } catch (error) {
-      console.error("Error during payment:", error);
-    }
-  };
 
   const toggleActive = (navId) => {
     sorting(navId);
@@ -67,35 +55,17 @@ const History = () => {
     // Tambahkan logika atau panggil fungsi lain yang diperlukan saat mengganti navigasi
   };
 
-  // const History = () => {
-  //   setIsLoading(true);
-  //   GetTransaksiLaundryByIdUser()
-  //     .then((value) => {
-  //       setHistory(value);
-
-  //       console.log(`Isi History ${value}`);
-  //     })
-  //     .catch((err) => { });
-  //   setIsLoading(false);
-  // };
-
-  const fetchHistory = () => {
+  const History = () => {
     setIsLoading(true);
     GetTransaksiLaundryByIdUser()
       .then((value) => {
         setHistory(value);
-        console.log(`Isi History ${value}`);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
-  };
 
-  useEffect(() => {
-    // Di sini, Anda dapat melakukan sesuatu setelah perubahan historySearch
-    fetchHistory();
-  }, []);
+        console.log(`Isi History ${value}`);
+      })
+      .catch((err) => {});
+    setIsLoading(false);
+  };
 
   const sorting = (index) => {
     if (index == 1) {
@@ -106,6 +76,8 @@ const History = () => {
       setCodeSort("Done");
     }
   };
+
+  
 
   const search = (event) => {
     setIsLoading(true);
@@ -145,13 +117,14 @@ const History = () => {
       console.log(`nama index${index} ${item.harga}`);
     });
     setIsLoading(false);
-    // Lakukan sesuatu dengan data hasil pencarian
+ 
   };
 
-  // useEffect(() => {
-  //   // Di sini, Anda dapat melakukan sesuatu setelah perubahan historySearch
-  //   History();
-  // }, []); // Pastikan untuk menambahkan historySearch ke dalam dependensi useEffect jika diperlukan
+  useEffect(() => {
+    
+    History();
+  }, []);
+  
 
   return (
     <>
@@ -173,8 +146,9 @@ const History = () => {
             <div className="col-md col">
               <div className="app-bar2">
                 <div
-                  className={`s1 app-bar-p row v-center ${activeNav === 1 ? "active" : ""
-                    }`}
+                  className={`s1 app-bar-p row v-center ${
+                    activeNav === 1 ? "active" : ""
+                  }`}
                   style={{ height: "fit-content" }}
                 >
                   <div className="col">
@@ -221,8 +195,9 @@ const History = () => {
                 </div>
                 <div
                   id="s2"
-                  className={`app-bar-p row v-center search2 ${activeNav === 2 ? "active" : ""
-                    }`}
+                  className={`app-bar-p row v-center search2 ${
+                    activeNav === 2 ? "active" : ""
+                  }`}
                   style={{ height: "50px" }}
                 >
                   <div className="col">
@@ -283,7 +258,7 @@ const History = () => {
                                     transform: "translate(105%, -25px)",
                                   }}
                                 ></i>
-                                <div className="card_size" onClick={() => handleShowModal(item)}>
+                                <div className="card_size">
                                   {item.status_pembayaran === "Lunas" ? (
                                     <div
                                       id="liveToastBtn"
@@ -342,7 +317,7 @@ const History = () => {
                                     transform: "translate(105%, -25px)",
                                   }}
                                 ></i>
-                                <div className="card_size" onClick={() => handleShowModal(item)}>
+                                <div className="card_size">
                                   {item.status_pembayaran === "Lunas" ? (
                                     <div
                                       id="liveToastBtn"
@@ -400,7 +375,7 @@ const History = () => {
                               className="fa fa-arrow-right"
                               style={{ transform: "translate(105%, -25px)" }}
                             ></i>
-                            <div className="card_size" onClick={() => handleShowModal(item)}>
+                            <div className="card_size">
                               {item.status_pembayaran === "Lunas" ? (
                                 <div
                                   id="liveToastBtn"
@@ -457,7 +432,7 @@ const History = () => {
                               className="fa fa-arrow-right"
                               style={{ transform: "translate(105%, -25px)" }}
                             ></i>
-                            <div className="card_size" onClick={() => handleShowModal(item)}>
+                            <div className="card_size">
                               {item.status_pembayaran === "Lunas" ? (
                                 <div
                                   id="liveToastBtn"
@@ -484,22 +459,6 @@ const History = () => {
               </div>
             </div>
           </div>
-          <Modal show={showModal} onHide={handleCloseModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>Konfirmasi Pembayaran</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Anda yakin ingin melakukan pembayaran?
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseModal}>
-                Batal
-              </Button>
-              <Button variant="primary" onClick={handlePayment}>
-                Bayar
-              </Button>
-            </Modal.Footer>
-          </Modal>
         </>
       )}
     </>

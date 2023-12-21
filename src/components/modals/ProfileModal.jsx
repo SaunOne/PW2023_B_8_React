@@ -129,7 +129,7 @@ const ProfileModal = () => {
           </div>
           <div className="row"></div>
           <div className="row">
-            <Button variant="danger" onClick={() => test()}>
+            <Button variant="danger" onClick={() => logout()}>
               Logout
             </Button>
           </div>

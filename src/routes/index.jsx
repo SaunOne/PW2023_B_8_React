@@ -14,8 +14,28 @@ import History from "../pages/HistoryPage";
 import OurTeam from "../pages/greeting/OurTeamPage";
 import About from "../pages/greeting/AboutPage";
 import AdminLayout from "../layouts/AdminLayout";
-import Admin from "../pages/admin/AdminPage";
-import TampilImage from "../components/modals/tampilImage";
+
+
+
+import Footer from "../components/footer";
+
+import AdminShowUser from "../pages/admin/user/showDataUser";
+import AdminCreateUser from "../pages/admin/user/createUserPage";
+import AdminUpdateUser from "../pages/admin/user/updateUserPage";
+
+import AdminUpdateLayanan from "../pages/admin/layanan/updateLayananPage";
+import CreateLayanan from "../pages/admin/layanan/createLayananPage";
+
+
+
+
+import ShowDataJenisPengambilan from "../pages/admin/jenis_pengambilan/ShowJenisPengambilan";
+import CreateJenisPengambilanPage from "../pages/admin/jenis_pengambilan/CreateJenisPengambilan";
+import CreateItem from "../pages/admin/item/createItemPage";
+import ShowDataItem from "../pages/admin/item/showDataItemPage";
+import UpdateItemLaundry from "../pages/admin/item/updateItemPage";
+
+
 const router = createBrowserRouter([
   {
     path: "*",
@@ -23,6 +43,7 @@ const router = createBrowserRouter([
   },
 
   {
+
     children: [
       {
         path: "/",
@@ -30,6 +51,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <DashboardPage />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -47,6 +69,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <About />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -56,6 +79,7 @@ const router = createBrowserRouter([
           <div className="">
             <TopNavbar />
             <OurTeam />
+            <Footer></Footer>
           </div>
         ),
       },
@@ -110,11 +134,51 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin",
-        element: <Admin />,
+        element: <AdminShowUser />,
       },
       {
-        path: "/admin/layanan",
-        element: <Admin />,
+        path: "/admin/showDataUser",
+        element: <AdminShowUser />,
+      },
+      {
+        path: "/admin/createUser",
+        element: <AdminCreateUser />,
+      },
+      {
+        path: "/admin/updateUser",
+        element: <AdminUpdateUser />,
+      },
+      {
+        path: "/admin/showDataJenisPengambilan",
+        element: <ShowDataJenisPengambilan />,
+      },
+      {
+        path: "/admin/createDataJenisPengambilan",
+        element: <CreateJenisPengambilanPage />,
+      },
+      {
+        path: "/admin/createLayanan",
+        element: <CreateLayanan />,
+      },
+      {
+        path: "/admin/showDataLayanan",
+        element: <ShowDataJenisPengambilan />,
+      },
+      {
+        path: "/admin/updateLayanan",
+        element: <AdminUpdateLayanan />,
+      },
+      {
+        path: "/admin/showDataItem",
+        element: <ShowDataItem />,
+      },
+      {
+        path: "/admin/createItem",
+        element: <CreateItem />,
+      },
+      {
+        path: "/admin/updateItem ",
+        element: <UpdateItemLaundry />,
       },
     ],
   },
