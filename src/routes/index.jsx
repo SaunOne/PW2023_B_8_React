@@ -14,20 +14,20 @@ import History from "../pages/HistoryPage";
 import OurTeam from "../pages/greeting/OurTeamPage";
 import About from "../pages/greeting/AboutPage";
 import AdminLayout from "../layouts/AdminLayout";
-import Admin from "../pages/admin/AdminPage";
 
-import TampilImage from "../components/modals/tampilImage";
+
+
 import Footer from "../components/footer";
 
 import AdminShowUser from "../pages/admin/user/showDataUser";
 import AdminCreateUser from "../pages/admin/user/createUserPage";
 import AdminUpdateUser from "../pages/admin/user/updateUserPage";
-import AdminShowLayanan from "../pages/admin/layanan/showDataLayananPage";
+
 import AdminUpdateLayanan from "../pages/admin/layanan/updateLayananPage";
 import CreateLayanan from "../pages/admin/layanan/createLayananPage";
-import AdminSideNav from "../pages/admin/sideNav";
 
-import ShowDataUser from "../pages/admin/showDataUser";
+
+
 
 import ShowDataJenisPengambilan from "../pages/admin/jenis_pengambilan/ShowJenisPengambilan";
 import CreateJenisPengambilanPage from "../pages/admin/jenis_pengambilan/CreateJenisPengambilan";
@@ -134,7 +134,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin",
-        element: <ShowDataUser />,
+        element: <AdminShowUser />,
       },
       {
         path: "/admin/showDataUser",
