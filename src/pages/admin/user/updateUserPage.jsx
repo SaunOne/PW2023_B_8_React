@@ -1,10 +1,6 @@
 import { React, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import AdminPageBackground from "../admin/adminPageBackground";
-import SidenavCustom from "../admin/sideNav";
 import { Button, Form, Modal } from "react-bootstrap";
-import { UpdateUser } from "../../api/apiUsers";
+import { UpdateUser } from "../../../api/apiUsers";
 import { toast } from "react-toastify";
 
 const UpdateUserAccount = ({ user, onClose }) => {
@@ -12,11 +8,6 @@ const UpdateUserAccount = ({ user, onClose }) => {
   const [data, setData] = useState(user);
   const [isPending, setIsPending] = useState(false);
 
-  const logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-    navigate("/");
-  };
   const handleClose = () => {
     setShow(false);
     onClose();
@@ -111,15 +102,15 @@ const UpdateUserAccount = ({ user, onClose }) => {
             </div>
             <div className="row mb-2">
               <div className="col-md-12">
-                <label className="d-flex">Password</label>
+                <label className="d-flex">Nomor Telepon</label>
                 <input
-                  type="password"
-                  label="Password"
-                  name="password"
+                  type="number"
+                  label="Nomor Telepon"
+                  name="no_telp"
                   onChange={handleChange}
-                  placeholder="Masukkan Password"
+                  placeholder="Nomor Telepon"
                   className="form-control"
-                  value={data?.email}
+                  value={data?.no_telp}
                 />
               </div>
             </div>

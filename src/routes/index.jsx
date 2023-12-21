@@ -19,11 +19,22 @@ import Admin from "../pages/admin/AdminPage";
 import TampilImage from "../components/modals/tampilImage";
 import Footer from "../components/footer";
 
-import AdminShowUser from "../pages/admin/showDataUser";
-import AdminCreateUser from "../pages/admin/createUserPage";
-import AdminUpdateUser from "../pages/admin/updateUserPage";
+import AdminShowUser from "../pages/admin/user/showDataUser";
+import AdminCreateUser from "../pages/admin/user/createUserPage";
+import AdminUpdateUser from "../pages/admin/user/updateUserPage";
+import AdminShowLayanan from "../pages/admin/layanan/showDataLayananPage";
+import AdminUpdateLayanan from "../pages/admin/layanan/updateLayananPage";
+import CreateLayanan from "../pages/admin/layanan/createLayananPage";
 import AdminSideNav from "../pages/admin/sideNav";
+
 import ShowDataUser from "../pages/admin/showDataUser";
+
+import ShowDataJenisPengambilan from "../pages/admin/jenis_pengambilan/ShowJenisPengambilan";
+import CreateJenisPengambilanPage from "../pages/admin/jenis_pengambilan/CreateJenisPengambilan";
+import CreateItem from "../pages/admin/item/createItemPage";
+import ShowDataItem from "../pages/admin/item/showDataItemPage";
+import UpdateItemLaundry from "../pages/admin/item/updateItemPage";
+
 
 const router = createBrowserRouter([
   {
@@ -136,6 +147,38 @@ const router = createBrowserRouter([
       {
         path: "/admin/updateUser",
         element: <AdminUpdateUser />,
+      },
+      {
+        path: "/admin/showDataJenisPengambilan",
+        element: <ShowDataJenisPengambilan />,
+      },
+      {
+        path: "/admin/createDataJenisPengambilan",
+        element: <CreateJenisPengambilanPage />,
+      },
+      {
+        path: "/admin/createLayanan",
+        element: <CreateLayanan />,
+      },
+      {
+        path: "/admin/showDataLayanan",
+        element: <ShowDataJenisPengambilan />,
+      },
+      {
+        path: "/admin/updateLayanan",
+        element: <AdminUpdateLayanan />,
+      },
+      {
+        path: "/admin/showDataItem",
+        element: <ShowDataItem />,
+      },
+      {
+        path: "/admin/createItem",
+        element: <CreateItem />,
+      },
+      {
+        path: "/admin/updateItem ",
+        element: <UpdateItemLaundry />,
       },
     ],
   },

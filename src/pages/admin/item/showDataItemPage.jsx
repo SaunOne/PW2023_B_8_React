@@ -1,40 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import AdminPageBackground from "../admin/adminPageBackground";
-import SidenavCustom from "../admin/sideNav";
+import AdminPageBackground from "../adminPageBackground";
 import { Button, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { DeleteUser, GetAllUser } from "../../api/apiUsers";
-import { Link } from "react-router-dom";
-import "./css/ShowDataUser.css";
-import UpdateUserAccount from "./updateUserPage";
+import "../css/ShowDataUser.css";
+import { DeleteItem, GetAllItems } from "../../../api/apiItem";
+import UpdateItemLaundry from "./updateItemPage";
 
-const ShowDataUser = () => {
+const ShowDataItem = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [itemList, setItemList] = useState([]);
   const [isPending, setIsPending] = useState(false);
 
-  const deleteUser = (id) => {
+  const deleteItem = (id) => {
     setIsPending(true);
-    // Toast.success(response);
-    DeleteUser(id)
+    DeleteItem(id)
       .then((response) => {
-        setIsPending(false);
+        // setIsPending(false);
         toast.success(response.message);
-        showUser();
+        showItem();
       })
       .catch((err) => {
         console.log(err);
         setIsPending(false);
-        toast.dark(err.message);
+        showItem();
       });
   };
-  const showUser = () => {
+  const showItem = () => {
     setIsLoading(true);
-    GetAllUser()
+    GetAllItems()
       .then((response) => {
-        setUsers(response);
+        setItemList(response);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -43,15 +40,9 @@ const ShowDataUser = () => {
       });
   };
   useEffect(() => {
-    showUser();
+    showItem();
   }, []);
   const [selectedOption, setSelectedOption] = useState("option1");
-
-  const logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-    navigate("/");
-  };
 
   return (
     <AdminPageBackground>
@@ -66,7 +57,7 @@ const ShowDataUser = () => {
                 backgroundColor: "rgba(0, 0, 0, 0.4)",
               }}
             >
-              Show Data User
+              Show Data Item
             </h1>
             <div className="row">
               <div className="col-8">
@@ -100,24 +91,25 @@ const ShowDataUser = () => {
                   <thead>
                     <tr>
                       <th scope="col">No</th>
-                      <th scope="col">Nama</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Alamat</th>
-                      <th scope="col">Nomor Telepon</th>
+                      <th scope="col">Nama Item</th>
+                      <th scope="col">Harga</th>
+                      <th scope="col">Deskripsi</th>
                       <th scope="col">Edit</th>
                       <th scope="col">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {users.map((user, index) => (
-                      <tr key={user.id}>
+                    {itemList.map((item, index) => (
+                      <tr key={item.id}>
                         <th scope="row">{index + 1}</th>
-                        <td>{user.fullname}</td>
-                        <td>{user.email}</td>
-                        <td>{user.alamat}</td>
-                        <td>{user.no_telp}</td>
+                        <td>{item.nama_item}</td>
+                        <td>{item.harga}</td>
+                        <td>{item.deskripsi}</td>
                         <td>
-                          <UpdateUserAccount user={user} onClose={showUser} />
+                          <UpdateItemLaundry
+                            item={item}
+                            onClose={showItem}
+                          />
                         </td>
                         <td className="delete-col">
                           {isPending ? (
@@ -137,7 +129,7 @@ const ShowDataUser = () => {
                           ) : (
                             <Button
                               variant="danger"
-                              onClick={() => deleteUser(user.id_user)}
+                              onClick={() => deleteItem(item.id_item)}
                               style={{ marginRight: "7px", width: "70px" }}
                             >
                               Hapus
@@ -157,4 +149,4 @@ const ShowDataUser = () => {
   );
 };
 
-export default ShowDataUser;
+export default ShowDataItem;
