@@ -12,6 +12,8 @@ const ShowDataLayanan = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [layanans, setLayanan] = useState([]);
   const [isPending, setIsPending] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [originalData, setOriginalData] = useState([]);
 
   const deleteLayanan = (id) => {
     setIsPending(true);
@@ -32,6 +34,7 @@ const ShowDataLayanan = () => {
     GetAllLayanan()
       .then((response) => {
         setLayanan(response);
+        setOriginalData(response);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -42,6 +45,21 @@ const ShowDataLayanan = () => {
   useEffect(() => {
     showLayanan();
   }, []);
+
+  const handleSearch = () => {
+    setIsLoading(true);
+    if (searchInput === "") {
+      setLayanan(originalData);
+    } else {
+      const filteredData = originalData.filter((layanan) =>
+        layanan.nama_layanan
+          .toLowerCase()
+          .includes(searchInput.toLowerCase())
+      );
+      setLayanan(filteredData);
+    }
+    setIsLoading(false);
+  };
 
   return (
     <AdminPageBackground>
@@ -68,6 +86,11 @@ const ShowDataLayanan = () => {
                       placeholder="Search"
                       aria-label="Search"
                       aria-describedby="search-addon"
+                      value={searchInput}
+                      onChange={(e) => {
+                        setSearchInput(e.target.value);
+                        handleSearch();
+                      }}
                     />
                     <div className="input-group-append mx-2">
                       <button

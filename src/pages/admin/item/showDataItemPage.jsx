@@ -12,6 +12,8 @@ const ShowDataItem = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [itemList, setItemList] = useState([]);
   const [isPending, setIsPending] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
+  const [originalData, setOriginalData] = useState([]);
 
   const deleteItem = (id) => {
     setIsPending(true);
@@ -29,13 +31,16 @@ const ShowDataItem = () => {
   };
   const showItem = () => {
     setIsLoading(true);
+    setOriginalData(response);
     GetAllItems()
       .then((response) => {
         setItemList(response);
+        setOriginalData(response);
         setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setOriginalData(response);
         setIsLoading(false);
       });
   };
@@ -43,6 +48,19 @@ const ShowDataItem = () => {
     showItem();
   }, []);
   const [selectedOption, setSelectedOption] = useState("option1");
+
+  const handleSearch = () => {
+    setIsLoading(true);
+    if (searchInput === "") {
+      setItemList(originalData);
+    } else {
+      const filteredData = originalData.filter((item) =>
+        item.nama_item.toLowerCase().includes(searchInput.toLowerCase())
+      );
+      setItemList(filteredData);
+    }
+    setIsLoading(false);
+  };
 
   return (
     <AdminPageBackground>
@@ -69,6 +87,11 @@ const ShowDataItem = () => {
                       placeholder="Search"
                       aria-label="Search"
                       aria-describedby="search-addon"
+                      value={searchInput}
+                      onChange={(e) => {
+                        setSearchInput(e.target.value);
+                        handleSearch();
+                      }}
                     />
                     <div className="input-group-append mx-2">
                       <button
@@ -106,10 +129,7 @@ const ShowDataItem = () => {
                         <td>{item.harga}</td>
                         <td>{item.deskripsi}</td>
                         <td>
-                          <UpdateItemLaundry
-                            item={item}
-                            onClose={showItem}
-                          />
+                          <UpdateItemLaundry item={item} onClose={showItem} />
                         </td>
                         <td className="delete-col">
                           {isPending ? (

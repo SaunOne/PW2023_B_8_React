@@ -31,6 +31,7 @@ import CreateJenisPengambilanPage from "../pages/admin/jenis_pengambilan/CreateJ
 import CreateItem from "../pages/admin/item/createItemPage";
 import ShowDataItem from "../pages/admin/item/showDataItemPage";
 import UpdateItemLaundry from "../pages/admin/item/updateItemPage";
+import ShowDataLayanan from "../pages/admin/layanan/showDataLayananPage";
 
 const router = createBrowserRouter([
   {
@@ -158,7 +159,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/showDataLayanan",
-        element: <ShowDataJenisPengambilan />,
+        element: <ShowDataLayanan />,
       },
       {
         path: "/admin/updateLayanan",
