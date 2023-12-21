@@ -1,14 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Form,
-  Container,
-  Spinner,
-  Button,
-  Modal,
-} from "react-bootstrap";
-import { Steps } from 'rsuite';
+import { Form, Container, Spinner, Button, Modal } from "react-bootstrap";
+import { Steps } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import "./Payment.css";
@@ -20,6 +14,7 @@ import { GetTransaksiTambahanByIdTransaksi } from "../../api/apiTransaksiTambaha
 import { GetAllItems } from "../../api/apiItem";
 import { BayarTransaksiLaundry } from "../../api/apiTransaksiLaundry";
 import { Pembayaran } from "../../api/apiDeposit";
+import { toast } from "react-toastify";
 
 const Payment = () => {
   const [detailTransaksi, setShowDetailTransaksi] = useState(null);
@@ -37,7 +32,9 @@ const Payment = () => {
         const userData = await GetUserById(sessionStorage.getItem("id_user"));
         setUserData(userData);
 
-        const detailTransaksiData = await GetTransaksiLaundryById(sessionStorage.getItem("id_transaksi"));
+        const detailTransaksiData = await GetTransaksiLaundryById(
+          sessionStorage.getItem("id_transaksi")
+        );
         setShowDetailTransaksi([detailTransaksiData]);
 
         const jenisPengambilanData = await GetAllJenisPengambilan();
@@ -46,7 +43,9 @@ const Payment = () => {
         const layananData = await GetAllLayanan();
         setLayanan(layananData);
 
-        const transaksiTambahanData = await GetTransaksiTambahanByIdTransaksi(sessionStorage.getItem("id_transaksi"));
+        const transaksiTambahanData = await GetTransaksiTambahanByIdTransaksi(
+          sessionStorage.getItem("id_transaksi")
+        );
         setTransaksiTambahan(transaksiTambahanData);
 
         const itemsData = await GetAllItems();
@@ -67,28 +66,45 @@ const Payment = () => {
 
   const handlePayment = async () => {
     try {
-      await BayarTransaksiLaundry(sessionStorage.getItem("id_transaksi"));
-      const newPembayaran = {
-        jumlah: detailTransaksi[0].total_harga, 
-      };
-      console.log(newPembayaran);
-      await Pembayaran(newPembayaran);
-      setShowModal(true);
+      BayarTransaksiLaundry(sessionStorage.getItem("id_transaksi"))
+        .then((value) => {
+          console.log(`isi value : ${value.message}`);
+          if (value.message == "Saldo Anda Tidak Cukup") {
+            toast.error(`messagenya : ${value.message} `);
+          } else {
+            const newPembayaran = {
+              jumlah: detailTransaksi[0].total_harga,
+            };
+            console.log(newPembayaran);
+            Pembayaran(newPembayaran);
+            setShowModal(true);
+          }
+        })
+        .catch((err) => {
+          console.log("kok");
+        });
     } catch (error) {
       console.error("Error during payment:", error);
     }
   };
 
   const handleBayarNanti = () => {
-    navigate('/user');
+    navigate("/user");
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
-    navigate('/user');
+    navigate("/user");
   };
 
-  if (!detailTransaksi || !userData || !transaksiTambahan || !jenisPengambilan || !layanan || !items) {
+  if (
+    !detailTransaksi ||
+    !userData ||
+    !transaksiTambahan ||
+    !jenisPengambilan ||
+    !layanan ||
+    !items
+  ) {
     return (
       <div className="d-flex justify-content-center align-items-center">
         <Spinner animation="border" variant="primary" />
@@ -108,14 +124,21 @@ const Payment = () => {
         <div className="col-8 cont-1">
           <Container className="cont-payment mb-5">
             <div className="row">
-              <h4 className="d-flex"><strong>DETAIL PEMBAYARAN</strong></h4>
+              <h4 className="d-flex">
+                <strong>DETAIL PEMBAYARAN</strong>
+              </h4>
             </div>
             <div className="row mt-5">
               <Form id="walletForm">
-                <h5 style={{ color: "#014E87" }} className="form-label d-flex"><FontAwesomeIcon icon={faWallet} /><strong>Jumlah Saldo</strong></h5>
+                <h5 style={{ color: "#014E87" }} className="form-label d-flex">
+                  <FontAwesomeIcon icon={faWallet} />
+                  <strong>Jumlah Saldo</strong>
+                </h5>
                 {/* <input type="text" className="form-control form-control-lg" id="wallet" name="wallet"
                   value='IDR ${user.saldo}' readOnly /> */}
-                <h3 className="d-flex mt-2" style={{ color: "#014E87" }}>IDR {userData.saldo}.00</h3>
+                <h3 className="d-flex mt-2" style={{ color: "#014E87" }}>
+                  IDR {userData.saldo}.00
+                </h3>
               </Form>
             </div>
             <div className="mt-4 d-flex justify-content-end">
@@ -136,14 +159,18 @@ const Payment = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <th className="text-start" colSpan="2">Detail Pesanan</th>
+                  <th className="text-start" colSpan="2">
+                    Detail Pesanan
+                  </th>
                 </tr>
               </thead>
               {detailTransaksi.map((detail) => (
                 <tbody key={detail.id_transaksi_laundry}>
                   <tr>
                     <th className="text-start">ID Transaksi</th>
-                    <td className="text-start">{detail.id_transaksi_laundry}</td>
+                    <td className="text-start">
+                      {detail.id_transaksi_laundry}
+                    </td>
                   </tr>
                   <tr>
                     <th className="text-start">Alamat</th>
@@ -152,13 +179,23 @@ const Payment = () => {
                   <tr>
                     <th className="text-start">Layanan</th>
                     <td className="text-start">
-                      {layanan.find((service) => service.id_layanan === detail.id_layanan)?.nama_layanan}
+                      {
+                        layanan.find(
+                          (service) => service.id_layanan === detail.id_layanan
+                        )?.nama_layanan
+                      }
                     </td>
                   </tr>
                   <tr>
                     <th className="text-start">Jenis Pengambilan</th>
                     <td className="text-start">
-                      {jenisPengambilan.find((jenis) => jenis.id_jenis_pengambilan === detail.id_jenis_pengambilan)?.nama_jenis_pengambilan}
+                      {
+                        jenisPengambilan.find(
+                          (jenis) =>
+                            jenis.id_jenis_pengambilan ===
+                            detail.id_jenis_pengambilan
+                        )?.nama_jenis_pengambilan
+                      }
                     </td>
                   </tr>
                   <tr>
@@ -170,7 +207,12 @@ const Payment = () => {
                     <td className="text-start">
                       {transaksiTambahan.map((tambahan) => (
                         <div key={tambahan.id_transaksi_tambahan}>
-                          {items.find((item) => item.id_item === tambahan.id_item)?.nama_item} ({tambahan.jumlah}) <br />
+                          {
+                            items.find(
+                              (item) => item.id_item === tambahan.id_item
+                            )?.nama_item
+                          }{" "}
+                          ({tambahan.jumlah}) <br />
                         </div>
                       ))}
                     </td>
@@ -181,7 +223,12 @@ const Payment = () => {
                   </tr>
                   <tr>
                     <th className="text-start">Status</th>
-                    <td className="text-start" style={{ color: "rgb(200, 0, 0)" }}>{detail.status_pembayaran}</td>
+                    <td
+                      className="text-start"
+                      style={{ color: "rgb(200, 0, 0)" }}
+                    >
+                      {detail.status_pembayaran}
+                    </td>
                   </tr>
                 </tbody>
               ))}

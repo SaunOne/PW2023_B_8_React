@@ -26,11 +26,15 @@ import AdminShowLayanan from "../pages/admin/layanan/showDataLayananPage";
 import AdminUpdateLayanan from "../pages/admin/layanan/updateLayananPage";
 import CreateLayanan from "../pages/admin/layanan/createLayananPage";
 import AdminSideNav from "../pages/admin/sideNav";
+
+import ShowDataUser from "../pages/admin/showDataUser";
+
 import ShowDataJenisPengambilan from "../pages/admin/jenis_pengambilan/ShowJenisPengambilan";
 import CreateJenisPengambilanPage from "../pages/admin/jenis_pengambilan/CreateJenisPengambilan";
 import CreateItem from "../pages/admin/item/createItemPage";
 import ShowDataItem from "../pages/admin/item/showDataItemPage";
 import UpdateItemLaundry from "../pages/admin/item/updateItemPage";
+
 
 const router = createBrowserRouter([
   {
@@ -130,7 +134,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin",
-        element: <Admin />,
+        element: <ShowDataUser />,
       },
       {
         path: "/admin/showDataUser",

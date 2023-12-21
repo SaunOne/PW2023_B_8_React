@@ -35,7 +35,7 @@ export const GetDepositById = async (id) => {
 // Menampilkan deposit berdasarkan ID user
 export const GetDepositByUserId = async (id) => {
   try {
-    const response = await useAxios.get(`/deposit/user/${id}`, {
+    const response = await useAxios.get(`/depositUser/${id}`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
