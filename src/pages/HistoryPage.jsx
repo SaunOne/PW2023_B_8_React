@@ -16,7 +16,10 @@ import {
   Spinner,
   Stack,
   Button,
+  Modal,
 } from "react-bootstrap";
+import { Pembayaran } from "../api/apiDeposit";
+import { BayarTransaksiLaundry } from "../api/apiTransaksiLaundry";
 
 //modal payment
 const PaymentModal = ({ isOpen, onClose, paymentInfo }) => {
@@ -46,7 +49,38 @@ const History = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [historySearch, setHistorySearch] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
-  
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedTransaction(null);
+  };
+
+  const handleShowModal = (transaction) => {
+    setSelectedTransaction(transaction);
+    setShowModal(true);
+  };
+
+  const handlePayment = async () => {
+    try {
+      await BayarTransaksiLaundry(selectedTransaction.id_transaksi_laundry);
+
+      const newPembayaran = {
+        jumlah: selectedTransaction.harga,
+      };
+
+      console.log(newPembayaran);
+
+      await Pembayaran(newPembayaran);
+
+      window.location.reload();
+      handleCloseModal();
+    } catch (error) {
+      console.error("Error during payment:", error);
+    }
+  };
 
 
   const toggleActive = (navId) => {
@@ -55,17 +89,34 @@ const History = () => {
     // Tambahkan logika atau panggil fungsi lain yang diperlukan saat mengganti navigasi
   };
 
-  const History = () => {
+  // const History = () => {
+  //   setIsLoading(true);
+  //   GetTransaksiLaundryByIdUser()
+  //     .then((value) => {
+  //       setHistory(value);
+
+  //       console.log(`Isi History ${value}`);
+  //     })
+  //     .catch((err) => {});
+  //   setIsLoading(false);
+  // };
+  const fetchHistory = () => {
     setIsLoading(true);
     GetTransaksiLaundryByIdUser()
       .then((value) => {
         setHistory(value);
-
         console.log(`Isi History ${value}`);
+        setIsLoading(false);
       })
-      .catch((err) => {});
-    setIsLoading(false);
+      .catch((err) => {
+        setIsLoading(false);
+      });
   };
+
+  useEffect(() => {
+    // Di sini, Anda dapat melakukan sesuatu setelah perubahan historySearch
+    fetchHistory();
+  }, []);
 
   const sorting = (index) => {
     if (index == 1) {
@@ -77,7 +128,7 @@ const History = () => {
     }
   };
 
-  
+
 
   const search = (event) => {
     setIsLoading(true);
@@ -117,14 +168,14 @@ const History = () => {
       console.log(`nama index${index} ${item.harga}`);
     });
     setIsLoading(false);
- 
+
   };
 
-  useEffect(() => {
-    
-    History();
-  }, []);
-  
+  // useEffect(() => {
+
+  //   History();
+  // }, []);
+
 
   return (
     <>
@@ -146,9 +197,8 @@ const History = () => {
             <div className="col-md col">
               <div className="app-bar2">
                 <div
-                  className={`s1 app-bar-p row v-center ${
-                    activeNav === 1 ? "active" : ""
-                  }`}
+                  className={`s1 app-bar-p row v-center ${activeNav === 1 ? "active" : ""
+                    }`}
                   style={{ height: "fit-content" }}
                 >
                   <div className="col">
@@ -195,9 +245,8 @@ const History = () => {
                 </div>
                 <div
                   id="s2"
-                  className={`app-bar-p row v-center search2 ${
-                    activeNav === 2 ? "active" : ""
-                  }`}
+                  className={`app-bar-p row v-center search2 ${activeNav === 2 ? "active" : ""
+                    }`}
                   style={{ height: "50px" }}
                 >
                   <div className="col">
@@ -258,7 +307,7 @@ const History = () => {
                                     transform: "translate(105%, -25px)",
                                   }}
                                 ></i>
-                                <div className="card_size">
+                                <div className="card_size" onClick={() => handleShowModal(item)}>
                                   {item.status_pembayaran === "Lunas" ? (
                                     <div
                                       id="liveToastBtn"
@@ -317,7 +366,7 @@ const History = () => {
                                     transform: "translate(105%, -25px)",
                                   }}
                                 ></i>
-                                <div className="card_size">
+                                <div className="card_size" onClick={() => handleShowModal(item)}>
                                   {item.status_pembayaran === "Lunas" ? (
                                     <div
                                       id="liveToastBtn"
@@ -375,7 +424,7 @@ const History = () => {
                               className="fa fa-arrow-right"
                               style={{ transform: "translate(105%, -25px)" }}
                             ></i>
-                            <div className="card_size">
+                            <div className="card_size" onClick={() => handleShowModal(item)}>
                               {item.status_pembayaran === "Lunas" ? (
                                 <div
                                   id="liveToastBtn"
@@ -432,7 +481,7 @@ const History = () => {
                               className="fa fa-arrow-right"
                               style={{ transform: "translate(105%, -25px)" }}
                             ></i>
-                            <div className="card_size">
+                            <div className="card_size" onClick={() => handleShowModal(item)}>
                               {item.status_pembayaran === "Lunas" ? (
                                 <div
                                   id="liveToastBtn"
@@ -459,6 +508,22 @@ const History = () => {
               </div>
             </div>
           </div>
+          <Modal show={showModal} onHide={handleCloseModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Konfirmasi Pembayaran</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Anda yakin ingin melakukan pembayaran?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseModal}>
+                Batal
+              </Button>
+              <Button variant="primary" onClick={handlePayment}>
+                Bayar
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </>
       )}
     </>
