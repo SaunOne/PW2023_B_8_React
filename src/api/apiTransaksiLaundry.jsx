@@ -86,7 +86,8 @@ export const BayarTransaksiLaundry = async (id) => {
         "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
       },
     });
-    return response.data.data;
+    
+    return response.data;
   } catch (error) {
     throw error.response.data;
   }

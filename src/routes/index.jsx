@@ -23,6 +23,7 @@ import AdminShowUser from "../pages/admin/showDataUser";
 import AdminCreateUser from "../pages/admin/createUserPage";
 import AdminUpdateUser from "../pages/admin/updateUserPage";
 import AdminSideNav from "../pages/admin/sideNav";
+import ShowDataUser from "../pages/admin/showDataUser";
 
 const router = createBrowserRouter([
   {
@@ -122,7 +123,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin",
-        element: <Admin />,
+        element: <ShowDataUser />,
       },
       {
         path: "/admin/showDataUser",
